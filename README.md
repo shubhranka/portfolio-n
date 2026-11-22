@@ -11,6 +11,7 @@ npm install
 npm run dev        # http://localhost:5173
 npm run build      # type-check + production build into dist/
 npm run preview    # serve dist/ locally
+npx lighthouse http://localhost:4173/ --form-factor=mobile --view   # with preview running
 ```
 
 ## Editing content
@@ -35,6 +36,13 @@ Still to fill in:
 
 The case studies are drafted from each repo's README. Chalky's README is the Next.js starter, so its case study is inferred from `package.json` and is flagged for review.
 
+### Demos, games and secrets
+
+Copy and data for the playful parts of the site (demo scripts, glossary, and later the games, badges and stones) live in [`src/extras.ts`](src/extras.ts).
+
+- **Playable demos.** The Sentinel and Ask-me case studies have a "Try it" section (`#demo`). Their home tiles get a small link to it. Tiles are listed in `demoTiles`, the Sentinel numbers and lines are in `sentinelSim`, and the call script and gauge values are in `askMeReplay`. Nothing plays until the visitor presses a button.
+- **Highlight to explain.** On any case-study page, selecting a word that's in `glossary` shows a short explanation card next to it. It closes when you click elsewhere, press Esc or use ×. To add a word, add `{ term, also?, text }`. Matching ignores case, surrounding punctuation and a trailing plural "s".
+
 ### Adding a case study
 
 1. Add a `caseStudy` to the project in `src/data.ts`. Order in `projects` = order on the site.
@@ -49,6 +57,8 @@ src/data.ts              ← all content
 src/main.ts              home page
 src/case.ts              case study page
 src/shared.ts            header tools, footer, boot()
+src/extras.ts            ← content for demos, games and secrets
+src/demos/               Sentinel mini-sim, Ask-me call replay, highlight-to-explain glossary
 src/lib/                 theme, terminal, tilt/reveal, formatting, env detection
 src/three/stage.ts       shared renderer plumbing (see below)
 src/three/hero.ts        noise-displaced fresnel glass blob, orbit rings

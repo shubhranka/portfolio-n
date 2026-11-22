@@ -1,4 +1,5 @@
 import { caseStudies, caseStudyHref, type Architecture, type Shot } from './data';
+import { demoTiles, glossaryHint } from './extras';
 import { $, esc, fmt, icons, linkAttrs } from './lib/dom';
 import { boot, footer, headerTools } from './shared';
 
@@ -71,6 +72,7 @@ $('#app')!.innerHTML = `
           )
           .join('')}
       </div>
+      <p class="case-hint">${esc(glossaryHint)}</p>
     </section>
 
     <section class="shot-hero">${frame(cs.hero, true)}</section>
@@ -122,6 +124,8 @@ $('#app')!.innerHTML = `
         : ''
     }
 
+    ${demoTiles[project.slug] ? `<section class="wrap section demo" id="demo" style="padding-top:24px"></section>` : ''}
+
     ${
       cs.gallery.length
         ? `
@@ -151,6 +155,18 @@ $('#app')!.innerHTML = `
   ${footer}`;
 
 boot();
+
+// Demos and the glossary are small, but only these pages need them.
+const demo = $('#demo');
+if (demo) {
+  const mount = project.slug === 'sentinel' ? import('./demos/sentinel').then((m) => m.mountSentinel) : import('./demos/askme').then((m) => m.mountAskMe);
+  void mount.then((fn) => {
+    fn(demo);
+    // The section didn't exist when the browser looked for #demo.
+    if (location.hash === '#demo') demo.scrollIntoView();
+  });
+}
+void import('./demos/glossary').then(({ initGlossary }) => initGlossary($('main')!));
 
 const start = () => import('./three/particles').then(({ initParticles }) => initParticles($('#particles')!));
 if ('requestIdleCallback' in window) requestIdleCallback(() => void start(), { timeout: 800 });

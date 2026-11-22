@@ -1,4 +1,5 @@
 import { caseStudies, caseStudyHref, lab, profile, projects, sphereTags, toolbox, type Project } from './data';
+import { demoTiles } from './extras';
 import { $, esc, fmt, icons, linkAttrs } from './lib/dom';
 import { boot, footer, headerTools } from './shared';
 
@@ -41,14 +42,23 @@ function bentoTile(p: Project, i: number) {
     i === 0
       ? `<div class="tile-top"><span class="tile-kind">${esc(p.kind)}</span><span class="cs">Case study ↗</span></div>`
       : `<span class="tile-kind">${esc(p.kind)}</span>`;
-  return `
-    <a class="tile ${size}${extra}" href="${caseStudyHref(p.slug)}" aria-label="${esc(p.name)} — case study">
+  const tile = `
+    <a class="tile ${demoTiles[p.slug] ? '' : size}${extra}" href="${caseStudyHref(p.slug)}" aria-label="${esc(p.name)} — case study">
       ${top}
       <h3>${esc(p.name)}</h3>
       <p>${fmt(p.blurb)}</p>
       ${i === 0 ? tags(p) : ''}
       ${visual}
     </a>`;
+  // A link can't hold another link, so the demo shortcut sits beside the tile.
+  if (!demoTiles[p.slug]) return tile;
+  return `
+    <div class="tile-slot ${size}">
+      ${tile}
+      <a class="tile-demo" href="${caseStudyHref(p.slug)}#demo" aria-label="${esc(`${demoTiles[p.slug]} — ${p.name}`)}">
+        <span aria-hidden="true">▶</span>${esc(demoTiles[p.slug])}
+      </a>
+    </div>`;
 }
 
 function smallTile(p: Project) {
