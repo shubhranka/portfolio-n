@@ -87,7 +87,10 @@ Everything about the 3D scenes is set up to stay calm and cheap:
 
 Theme: dark by default. The toggle (or `theme` in the terminal) switches to warm paper white, and the choice is saved in `localStorage`. The 3D colours follow the CSS tokens.
 
-Terminal: press `~` anywhere. Commands are `help`, `about`, `projects`, `contact`, `hire`, `theme`, `clear`, plus `open <project>` and `exit`. ↑/↓ steps through history and Tab completes.
+Terminal: press `~` anywhere. Commands are `help`, `about`, `projects`, `contact`, `hire`, `theme`, `clear`, plus `open <project>`, `play <game>` and `exit`. ↑/↓ steps through history and Tab completes.
+
+- **Games:** `play snake`, `play 2048` and `play ttt` run inside the terminal and take the keyboard until you press `q`. Use the arrow keys; in 2048, `u` undoes (up to 20 moves) and `r` restarts. On touch screens you can swipe on the board, and there's an on-screen key pad. Every 5th Snake food is amber: that's a hidden stone. Each game is its own chunk, loaded when you type the command. They live in `src/lib/termgames/`.
+- **Easter eggs** (not listed in `help`): `sudo hire-me` shows a fake password prompt. It only counts keystrokes to draw the asterisks, so the input never holds what you type, and then it prints the email. `rm -rf boredom` suggests a game.
 
 ## Deploy to Vercel
 
