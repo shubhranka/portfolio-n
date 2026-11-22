@@ -369,10 +369,6 @@ export const projects: Project[] = [
         { label: 'AI', value: 'Function-calling agent' },
         { label: 'Links', value: '', links: [{ label: 'Source', href: `${GH}/sentinel` }] },
       ],
-      hero: {
-        alt: 'Sentinel dashboard: portfolio, purchase triggers and the Sentinel chat',
-        caption: '[[Screenshot placeholder: add public/work/sentinel/dashboard.png and set `src`]]',
-      },
       problem: {
         title: 'Banking apps look backward.',
         body: '“You spent 30% on dining” is useful a month too late. Sentinel looks forward instead, at your balance against the bills already scheduled, and steps in *before* a payment bounces, not after.',

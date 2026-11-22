@@ -31,8 +31,8 @@ Still to fill in:
 | Photo | Put it in `public/me.jpg` and set `profile.photo = '/me.jpg'` |
 | Résumé | Put it in `public/resume.pdf`, then remove `placeholder: true` from `profile.resume` |
 | Jourme one-liner | the `jourme` project |
-| Sentinel / Chalky screenshots | Add images under `public/work/<slug>/` and set `hero.src` (plus `gallery` if you like) |
-| Ask-me screenshot (optional) | Ask-me has no hero image. To add one, put it in `public/work/ask-me/` and add `hero: { src, alt }` to its `caseStudy` |
+| Chalky screenshot | Add an image under `public/work/chalky/` and set `hero.src` (plus `gallery` if you like) |
+| Ask-me / Sentinel screenshots (optional) | These have no hero image. To add one, put it in `public/work/<slug>/` and add `hero: { src, alt }` to that `caseStudy` |
 | Hackathon details, Chalky role, "What I learned" | the matching `caseStudy` fields |
 | Secret-page note (`[[TODO]]`) | `secretNote` in `src/extras.ts`, shown at `/secret` after 5/5 stones |
 | Zusk stone word | It's the last word of Zusk's last "What I learned" item, so it follows whatever you write there |
