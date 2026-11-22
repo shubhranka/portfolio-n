@@ -40,7 +40,8 @@ function arch(a: Architecture) {
       parts.push(`<div class="arch-edge${label ? ' labeled' : ''}">${label ? `<span>${esc(label)}</span>` : ''}<i></i></div>`);
     }
   });
-  return `<div class="arch" role="img" aria-label="${esc(a.label)}">${parts.join('')}</div>`;
+  // Wide diagrams switch to the stacked layout earlier (see styles.css).
+  return `<div class="arch${a.columns.length > 4 ? ' arch-wide' : ''}" role="img" aria-label="${esc(a.label)}">${parts.join('')}</div>`;
 }
 
 const code = (src: string) =>

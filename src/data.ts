@@ -291,7 +291,7 @@ export const projects: Project[] = [
       eyebrow: 'Voice AI · Hackathon',
       tagline: 'A phone agent that tracks caller mood *and hands off to a human when a call goes wrong.*',
       facts: [
-        { label: 'Context', value: '[[Hackathon name · team or solo · result]]' },
+        { label: 'Context', value: '[[Hackathon *solo*]]' },
         { label: 'Stack', value: 'Python · LiveKit Agents · Gemini Live' },
         { label: 'Interfaces', value: 'Phone / browser mic · dark web UI' },
         { label: 'Links', value: '', links: [{ label: 'Source', href: `${GH}/ask-me` }] },
@@ -319,7 +319,7 @@ export const projects: Project[] = [
           'Architecture: the caller joins a LiveKit room; the agent runs Gemini Live for conversation, a judge model for sentiment, and escalation triggers that end in a human handoff or a hangup',
         columns: [
           [{ name: 'Caller', note: 'phone · browser mic' }],
-          [{ name: 'LiveKit room', note: 'audio · egress recording' }],
+          [{ name: 'LiveKit room', note: 'audio · recording' }],
           [{ name: 'Agent', note: 'fields · facts · scripts', tone: 'accent' }],
           [
             { name: 'Gemini Live', note: 'realtime voice' },
@@ -364,7 +364,7 @@ export const projects: Project[] = [
       eyebrow: 'Agentic finance · Autonomous cashflow guardian',
       tagline: 'Spots a cash crunch before it happens, *and asks before it fixes it.*',
       facts: [
-        { label: 'Context', value: '[[Hackathon / side project · team or solo]]' },
+        { label: 'Context', value: '[[SBI Hackathon · Shortlisted]]' },
         { label: 'Stack', value: 'Node · Express · Socket.io · React' },
         { label: 'AI', value: 'Function-calling agent' },
         { label: 'Links', value: '', links: [{ label: 'Source', href: `${GH}/sentinel` }] },

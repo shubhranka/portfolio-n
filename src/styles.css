@@ -530,7 +530,7 @@ canvas.term-board { display: block; max-width: 100%; }
   background-color: var(--surface-2);
   background-image: radial-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
   background-size: 20px 20px;
-  padding: 56px 40px; display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 56px 32px; display: flex; align-items: center; justify-content: safe center; gap: 12px;
   overflow-x: auto;
 }
 .arch-col { display: flex; flex-direction: column; gap: 12px; flex: none; }
@@ -543,9 +543,10 @@ canvas.term-board { display: block; max-width: 100%; }
 .arch-node.dashed b { color: var(--muted); }
 .arch-node.store { border-color: #5e87c9; background: linear-gradient(color-mix(in srgb, #5e87c9 22%, var(--surface-3)), var(--surface-3)); border-radius: 60px / 18px; padding: 26px 22px; align-items: center; text-align: center; }
 .arch-node.store b { color: color-mix(in srgb, #8fb4ff 70%, var(--text)); }
-.arch-edge { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: none; }
-.arch-edge span { font-family: var(--mono); font-size: 11px; color: var(--faint); white-space: nowrap; }
-.arch-edge i { position: relative; width: 70px; height: 1px; background: var(--line-strong); overflow: hidden; }
+/* Connectors give up width first, so five-column diagrams fit without squeezing the boxes. */
+.arch-edge { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 0 1 70px; min-width: 28px; }
+.arch-edge span { padding: 0 6px; font-family: var(--mono); font-size: 11px; color: var(--faint); white-space: nowrap; }
+.arch-edge i { position: relative; width: 100%; height: 1px; background: var(--line-strong); overflow: hidden; }
 .arch-edge.labeled i { background: color-mix(in srgb, var(--accent) 70%, transparent); }
 .arch-edge i::after {
   content: ''; position: absolute; top: 0; left: -20px; width: 20px; height: 1px;
@@ -978,14 +979,23 @@ kbd { font-family: var(--mono); font-size: 11px; padding: 1px 6px; border-radius
 /* ------------------------------------------------------------------------
    Responsive
    ------------------------------------------------------------------------ */
+/* Stacked diagram: below 960px for all, below 1180px for five-column ones. */
+@keyframes flow-v { to { top: 100%; } }
+@media (max-width: 1180px) {
+  .arch-wide { flex-direction: column; align-items: stretch; padding: 32px 20px; }
+  .arch-wide .arch-col { align-items: stretch; }
+  .arch-wide .arch-node { min-width: 0; }
+  .arch-wide .arch-edge { flex-direction: row; justify-content: center; gap: 10px; flex: none; }
+  .arch-wide .arch-edge i { width: 1px; height: 32px; }
+  .arch-wide .arch-edge i::after { width: 1px; height: 14px; left: 0; top: -14px; background: linear-gradient(transparent, var(--accent)); animation-name: flow-v; }
+}
 @media (max-width: 960px) {
   .arch { flex-direction: column; align-items: stretch; padding: 32px 20px; }
   .arch-col { align-items: stretch; }
   .arch-node { min-width: 0; }
-  .arch-edge { flex-direction: row; justify-content: center; gap: 10px; }
+  .arch-edge { flex-direction: row; justify-content: center; gap: 10px; flex: none; }
   .arch-edge i { width: 1px; height: 32px; }
   .arch-edge i::after { width: 1px; height: 14px; left: 0; top: -14px; background: linear-gradient(transparent, var(--accent)); animation-name: flow-v; }
-  @keyframes flow-v { to { top: 100%; } }
 }
 @media (max-width: 860px) {
   .bento { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; }
