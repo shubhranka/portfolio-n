@@ -38,7 +38,7 @@ export interface CaseStudy {
   eyebrow: string;
   tagline: string;
   facts: { label: string; value: string; links?: Link[] }[];
-  hero: Shot;
+  hero?: Shot; // omit to show no hero image at all
   problem: { title: string; body: string };
   decisions: { title: string; body: string }[];
   architecture: Architecture;
@@ -296,10 +296,6 @@ export const projects: Project[] = [
         { label: 'Interfaces', value: 'Phone / browser mic · dark web UI' },
         { label: 'Links', value: '', links: [{ label: 'Source', href: `${GH}/ask-me` }] },
       ],
-      hero: {
-        alt: 'Ask-me web UI: live transcript, caller mood gauge and escalation watchdog',
-        caption: '[[Screenshot placeholder: add public/work/ask-me/ui.png and set `src`]]',
-      },
       problem: {
         title: 'A sales agent arguing with someone who said no is the default failure mode.',
         body: 'Realtime voice models sound confident whether or not they know the answer, and they rarely notice a call going sour. I wanted an intake agent that collects exactly what it is configured to, always says the lines compliance needs, and gets out of the way the moment a person would do better.',

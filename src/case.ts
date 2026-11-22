@@ -76,7 +76,7 @@ $('#app')!.innerHTML = `
       <p class="case-hint">${esc(glossaryHint)}</p>
     </section>
 
-    <section class="shot-hero">${frame(cs.hero, true)}</section>
+    ${cs.hero ? `<section class="shot-hero">${frame(cs.hero, true)}</section>` : ''}
 
     <section class="wrap section split">
       <div class="reveal">
