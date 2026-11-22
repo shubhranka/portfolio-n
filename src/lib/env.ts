@@ -16,3 +16,7 @@ export const onReducedMotionChange = (fn: () => void) => reducedQuery.addEventLi
 
 /** Cap device pixel ratio — the biggest single win for GPU cost on phones. */
 export const pixelRatio = () => Math.min(window.devicePixelRatio || 1, env.lite ? 1.5 : 2);
+
+/** Live features (presence, guestbook, global boards) need the flag and both Supabase keys. */
+export const live =
+  import.meta.env.VITE_LIVE === 'true' && !!import.meta.env.VITE_SUPABASE_URL && !!import.meta.env.VITE_SUPABASE_ANON_KEY;

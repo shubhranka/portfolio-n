@@ -235,3 +235,37 @@ export const secretNote = {
   locked: 'Not yet. You’ve found {n} of 5 stones — keep looking.',
   lockedHint: 'Hint: one hides in the footer of every page.',
 };
+
+// ---------------------------------------------------------------------------
+// Live (Phase 5) — only shown when VITE_LIVE=true and Supabase keys are set.
+// ---------------------------------------------------------------------------
+
+export const liveCopy = {
+  here: (n: number) => `${n} here now`,
+  cursorsOn: 'Hide other visitors’ cursors',
+  cursorsOff: 'Show other visitors’ cursors',
+  visitor: 'Visitor',
+  wall: {
+    eyebrow: 'Live',
+    title: 'You’re not alone here.',
+    heading: 'Guestbook wall',
+    name: 'Your name',
+    line: 'Leave one line…',
+    submit: 'Pin it',
+    sent: 'Thanks! Your note will appear once I’ve read it.',
+    empty: 'No notes yet. Be the first.',
+    error: 'Couldn’t pin that right now — try again in a minute.',
+  },
+  board: {
+    note: 'Global leaderboard · nicknames only, nothing else is stored.',
+    submit: 'Submit my best',
+    nickname: 'Nickname',
+    sent: 'Submitted!',
+    none: 'Play a round first, then submit your best.',
+  },
+};
+
+/** Cursor and sticky-note colours, from the Live board. */
+export const liveColors = ['#F5C46A', '#9BE6B6', '#BCD2F5', '#F2B8A8', '#F2EEE8', '#8FB4FF'];
+
+export const limits = { name: 24, line: 80, nickname: 20 };

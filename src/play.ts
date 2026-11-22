@@ -47,6 +47,7 @@ $('#app')!.innerHTML = `
         )
         .join('')}
     </section>
+    <section class="wrap section" id="guestbook" hidden></section>
   </main>
   ${footer}`;
 

@@ -33,6 +33,9 @@ Still to fill in:
 | Jourme one-liner | the `jourme` project |
 | Ask-me / Sentinel / Chalky screenshots | Add images under `public/work/<slug>/` and set `hero.src` (plus `gallery` if you like) |
 | Hackathon details, Chalky role, "What I learned" | the matching `caseStudy` fields |
+| Secret-page note (`[[TODO]]`) | `secretNote` in `src/extras.ts`, shown at `/secret` after 5/5 stones |
+| Zusk stone word | It's the last word of Zusk's last "What I learned" item, so it follows whatever you write there |
+| Live features | Off until you set up Supabase (see **Live features** below) |
 
 The case studies are drafted from each repo's README. Chalky's README is the Next.js starter, so its case study is inferred from `package.json` and is flagged for review.
 
@@ -82,6 +85,9 @@ src/extras.ts            ← content for demos, games and secrets
 src/demos/               Sentinel mini-sim, Ask-me call replay, highlight-to-explain glossary
 play/index.html          /play entry → src/play.ts
 secret/index.html        /secret entry → src/secret.ts (noindex)
+src/live/                presence + cursors, guestbook, global leaderboards (Supabase; flag-gated)
+supabase/                schema.sql + the `submit` Edge Function
+api/geo.ts               Vercel Edge Function: city for cursor labels
 src/games/               SQL quiz, minimax + tic-tac-toe, typing race, blob, leaderboard
 src/lib/                 theme, terminal, tilt/reveal, formatting, env detection,
                          store (safe localStorage), scores, progress (stones + badges),
@@ -107,6 +113,40 @@ Terminal: press `~` anywhere. Commands are `help`, `about`, `projects`, `contact
 
 - **Games:** `play snake`, `play 2048` and `play ttt` run inside the terminal and take the keyboard until you press `q`. Use the arrow keys; in 2048, `u` undoes (up to 20 moves) and `r` restarts. On touch screens you can swipe on the board, and there's an on-screen key pad. Every 5th Snake food is amber: that's a hidden stone. Each game is its own chunk, loaded when you type the command. They live in `src/lib/termgames/`.
 - **Easter eggs** (not listed in `help`): `sudo hire-me` shows a fake password prompt. It only counts keystrokes to draw the asterisks, so the input never holds what you type, and then it prints the email. `rm -rf boredom` suggests a game.
+
+## Live features (optional)
+
+The "N here now" pill, live cursors, the guestbook wall on /play and the global leaderboards use **Supabase** (free tier). They only load when `VITE_LIVE=true` and both keys are set. Otherwise none of the code is fetched and the site works as before. If the service is unreachable they hide themselves: the pill never appears, the guestbook stays hidden and the leaderboard falls back to local bests.
+
+**Why Supabase:** one free service covers Realtime presence and broadcast (pill and cursors) and Postgres with row-level security (guestbook and scores), and you can approve notes in its table editor. PartyKit handles cursors well, but you'd still need a database and an admin view on top.
+
+**Setup**
+
+1. Create a project at [supabase.com](https://supabase.com) (the free tier is enough).
+2. In **SQL Editor**, run [`supabase/schema.sql`](supabase/schema.sql). It creates `guestbook` and `scores` with RLS on. The public anon key can only *read* approved notes and scores. There are no insert/update/delete policies.
+3. Deploy the write endpoint with the [Supabase CLI](https://supabase.com/docs/guides/cli):
+   ```sh
+   supabase login
+   supabase link --project-ref <your-project-ref>
+   supabase functions deploy submit
+   supabase secrets set ALLOWED_ORIGINS="https://your-domain.com,http://localhost:5173"
+   ```
+4. Copy `.env.example` to `.env` and set `VITE_LIVE=true`, `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (from **Project Settings → API**). On Vercel, add the same three variables under **Settings → Environment Variables**. `.env` is git-ignored.
+5. Realtime uses a public channel called `site`. If you've turned on "private channels only" in **Realtime settings**, allow public access for it.
+
+**Approving guestbook notes:** new notes are saved with `approved = false` and never shown. In **Table Editor → guestbook**, tick `approved` on the notes you want, or run `update guestbook set approved = true where id = <id>;`. To remove a note, delete its row.
+
+**Safeguards** (all in [`supabase/functions/submit/index.ts`](supabase/functions/submit/index.ts)):
+- Writes only come from allowed origins.
+- Text is trimmed and length-checked (name 24, line 80, nickname 20), and the database checks the same limits.
+- A short profanity list (`BLOCKED`, edit freely) and a no-links rule are applied.
+- Scores get plausibility checks: SQL 0–8, typing 1–200 wpm.
+- Rate limits: 2 notes and 10 scores per visitor per 10 minutes, plus a global hourly cap. The per-visitor limit is kept in memory and keyed by a salted hash of the IP, so nothing about the visitor is written to the database.
+- What's stored is only a display name or nickname plus the text or score. Scores are still sent by the browser, so treat the leaderboard as for fun.
+
+**Cursors:** only mouse and trackpad users send them, about six updates a second while moving, and never from a hidden tab. Cursors show only to people on the same page. Clicking the pill hides or shows them, and the choice is remembered. Labels say "Visitor · <city>" when deployed on Vercel: [`api/geo.ts`](api/geo.ts) returns just the city from Vercel's own location header and stores nothing. Elsewhere, including `npm run dev`, they say "Visitor".
+
+**Free-tier notes:** Supabase pauses free projects after a week without activity (restore it from the dashboard). Realtime has monthly message and concurrent-connection limits, which is why cursor updates are throttled.
 
 ## Deploy to Vercel
 

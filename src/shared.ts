@@ -1,6 +1,7 @@
 import './styles.css';
 import { profile } from './data';
 import { icons } from './lib/dom';
+import { live } from './lib/env';
 import { initKonami } from './lib/konami';
 import { initSecrets } from './lib/secrets';
 import { initTerminal } from './lib/terminal';
@@ -10,9 +11,10 @@ import { initReveal, initTilt } from './lib/tilt';
 /** Header tools shared by every page: terminal hint + theme toggle. */
 export const headerTools = `
   <div class="header-tools">
+    <button class="live-pill" type="button" data-live hidden></button>
     <button class="stone-counter" type="button" data-stones data-shelf hidden></button>
     <a class="kbd-hint tool-play" href="/play/">play</a>
-    <button class="kbd-hint" type="button" data-terminal aria-label="Open terminal (press ~)">press ~</button>
+    <button class="kbd-hint" type="button" data-terminal aria-label="Open terminal (press ~)"><span class="kbd-press">press </span>~</button>
     <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">${icons.moon}${icons.sun}</button>
   </div>`;
 
@@ -43,4 +45,10 @@ export function boot() {
   initReveal();
   initSecrets();
   initKonami();
+  // Live features are a separate chunk (with the Supabase client), fetched when idle.
+  if (live) {
+    const go = () => void import('./live').then((m) => m.initLive()).catch(() => {});
+    if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 3000 });
+    else setTimeout(go, 1500);
+  }
 }

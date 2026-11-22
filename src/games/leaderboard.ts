@@ -33,6 +33,13 @@ export const setSource = (fn: typeof source) => {
 };
 let refresh: (() => void) | undefined;
 
+/** Extra controls under the list (the live module adds "submit my best"). */
+let extra: ((game: Game, host: HTMLElement) => void) | undefined;
+export const setExtra = (fn: typeof extra) => {
+  extra = fn;
+  refresh?.();
+};
+
 /** Tabbed personal-best lists for the SQL game and the typing race. */
 export function mount(card: HTMLElement) {
   const body = card.querySelector<HTMLElement>('.game-body')!;
@@ -70,7 +77,9 @@ export function mount(card: HTMLElement) {
               .join('')}</ol>`
           : `<p class="board-empty">${esc(t.empty)}</p>`
       }
-      <p class="game-hint">${esc(note)}</p>`;
+      <p class="game-hint">${esc(note)}</p>
+      <div class="board-extra"></div>`;
+    extra?.(game, panel.querySelector('.board-extra')!);
   }
 
   card.querySelector('.tabs')!.addEventListener('click', (e) => {
