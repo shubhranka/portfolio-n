@@ -45,6 +45,7 @@ void main() {
 const fragment = /* glsl */ `
 uniform float uLight;
 uniform float uOpacity;
+uniform float uAnger;
 varying vec3 vNormal;
 varying vec3 vViewPos;
 varying float vDisp;
@@ -61,7 +62,8 @@ void main() {
   float spec2 = pow(max(dot(reflect(-normalize(vec3(0.6, -0.5, 0.5)), N), V), 0.0), 18.0);
 
   vec3 deep  = mix(vec3(0.09, 0.045, 0.015), vec3(0.55, 0.27, 0.05), uLight);
-  vec3 amber = vec3(0.96, 0.62, 0.13);
+  vec3 amber = mix(vec3(0.96, 0.62, 0.13), vec3(0.94, 0.32, 0.24), uAnger);
+  deep = mix(deep, vec3(0.22, 0.03, 0.02), uAnger);
   vec3 cream = vec3(1.0, 0.93, 0.80);
 
   vec3 col = mix(deep, amber, smoothstep(0.15, 0.95, diff));
@@ -86,7 +88,12 @@ function ring(radius: number, dashed: boolean, color: THREE.ColorRepresentation,
   return line;
 }
 
-export function initHero(host: HTMLElement) {
+export interface HeroOptions {
+  /** The /play blob: pokeable, tintable, and it doesn't shrink on scroll. */
+  playground?: boolean;
+}
+
+export function initHero(host: HTMLElement, opts: HeroOptions = {}) {
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
   camera.position.set(0, 0, 6.4);
 
@@ -95,6 +102,7 @@ export function initHero(host: HTMLElement) {
     uAmp: { value: 0.24 },
     uLight: { value: getTheme() === 'light' ? 1 : 0 },
     uOpacity: { value: 1 },
+    uAnger: { value: 0 },
   };
 
   const root = new THREE.Group();
@@ -153,7 +161,7 @@ export function initHero(host: HTMLElement) {
   };
   applyTheme();
 
-  const state = { rx: 0, ry: 0, px: 0, py: 0, scroll: 0 };
+  const state = { rx: 0, ry: 0, px: 0, py: 0, scroll: 0, squish: 0, squishV: 0, wobble: 0, anger: 0, angerTarget: 0 };
 
   const stage = createStage({
     host,
@@ -183,8 +191,17 @@ export function initHero(host: HTMLElement) {
       lean.rotation.set(state.rx, state.ry + t * 0.05, 0);
       lean.position.set(state.px, state.py + Math.sin(t * 0.9) * 0.06, 0);
 
+      // Poke: a damped spring squashes the blob, and the surface wobbles harder for a moment.
+      state.squishV += (-90 * state.squish - 9 * state.squishV) * dt;
+      state.squish += state.squishV * dt;
+      state.wobble = damp(state.wobble, 0, 2.2, dt);
+      state.anger = damp(state.anger, state.angerTarget, 3, dt);
+      uniforms.uAmp.value = 0.24 + state.wobble;
+      uniforms.uAnger.value = state.anger;
+      blob.scale.set(1 + state.squish * 0.5, 1 - state.squish, 1 + state.squish * 0.5);
+
       // Shrink away as the hero scrolls out.
-      const p = THREE.MathUtils.clamp(-r.top / (r.height * 0.9), 0, 1);
+      const p = opts.playground ? 0 : THREE.MathUtils.clamp(-r.top / (r.height * 0.9), 0, 1);
       state.scroll = env.reducedMotion ? p : damp(state.scroll, p, 6, dt);
       const s = 1 - state.scroll * 0.45;
       root.scale.setScalar(s);
@@ -203,6 +220,22 @@ export function initHero(host: HTMLElement) {
   stage.invalidate();
 
   // While paused under reduced motion, still follow scroll so the still frame isn't stale.
-  if (env.reducedMotion) window.addEventListener('scroll', () => stage.invalidate(), { passive: true });
-  return stage;
+  if (env.reducedMotion && !opts.playground) window.addEventListener('scroll', () => stage.invalidate(), { passive: true });
+
+  return Object.assign(stage, {
+    poke() {
+      if (env.reducedMotion) return;
+      state.squishV += 2.4;
+      state.wobble = Math.min(state.wobble + 0.08, 0.3);
+    },
+    /** 0 = calm amber … 1 = annoyed red. */
+    setAnger(v: number) {
+      state.angerTarget = v;
+      if (env.reducedMotion) {
+        state.anger = v;
+        uniforms.uAnger.value = v;
+      }
+      stage.invalidate();
+    },
+  });
 }

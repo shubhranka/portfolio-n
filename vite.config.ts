@@ -13,7 +13,11 @@ export default defineConfig({
     // three.js is one lazy-loaded chunk (~140 kB gzip), fetched after first paint.
     chunkSizeWarningLimit: 650,
     rolldownOptions: {
-      input: { main: resolve(import.meta.dirname, 'index.html'), ...caseStudies },
+      input: {
+        main: resolve(import.meta.dirname, 'index.html'),
+        play: resolve(import.meta.dirname, 'play', 'index.html'),
+        ...caseStudies,
+      },
     },
   },
 });

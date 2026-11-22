@@ -98,3 +98,95 @@ export const glossary: { term: string; also?: string[]; text: string }[] = [
   { term: 'node:sqlite', text: 'The SQLite database built into recent versions of Node.js, so local data needs no extra dependency.' },
   { term: 'RAG', text: 'Retrieval-augmented generation: look up relevant passages first, then give them to the model so its answer is grounded in your text.' },
 ];
+
+// ---------------------------------------------------------------------------
+// /play page
+// ---------------------------------------------------------------------------
+
+export const playPage = {
+  eyebrow: 'Play',
+  title: 'Take a break. *Lose to my code.*',
+  sql: {
+    title: 'Would Zusk run this?',
+    intro: 'Read-only mode is on. Allow the statement or block it before it reaches the database.',
+    keys: 'keys: A allow · B block · N next',
+    perfect: 'Perfect run. You think like a Postgres engine.',
+    good: 'Good run. Check the misses, then go for a perfect score.',
+  },
+  ttt: {
+    title: 'Beat my AI',
+    intro: 'You’re X. It plays minimax, so the best you can do is a draw — and a draw earns the “Worthy opponent” badge.',
+    status: {
+      turn: 'Your move.',
+      thinking: 'Thinking…',
+      x: 'You won? That should be impossible.',
+      o: 'The AI wins this one.',
+      draw: 'Draw — a worthy opponent.',
+    },
+  },
+  typing: {
+    title: 'Code typing race',
+    note: 'snippet from',
+    intro: 'Type the snippet exactly. The clock starts on your first key.',
+  },
+  blob: {
+    title: 'Blob playground',
+    intro: 'Poke it. Poke too fast and it gets annoyed, then slowly calms back down. It’s the same 3D blob as on the home page.',
+    calm: 'Let it calm down',
+    moods: { calm: 'Calm', wobbly: 'Wobbly', annoyed: 'Annoyed' },
+  },
+  board: {
+    title: 'Leaderboard',
+    localNote: 'Your personal bests, saved in this browser.',
+    empty: 'No scores yet. Play a round to set one.',
+  },
+};
+
+export interface SqlQuestion {
+  sql: string;
+  /** true = Zusk lets it through in read-only mode */
+  ok: boolean;
+  why: string;
+}
+
+/** "Would Zusk run this?" — add a question by adding an entry. */
+export const sqlQuestions: SqlQuestion[] = [
+  { sql: 'SELECT * FROM orders\nORDER BY placed_at DESC\nLIMIT 100;', ok: true, why: 'Plain reads are exactly what read-only mode is for.' },
+  { sql: 'DELETE FROM sessions\nWHERE expires_at < now();', ok: false, why: 'Postgres itself rejects the write with SQLSTATE 25006, because the run is inside BEGIN READ ONLY.' },
+  { sql: 'COMMIT;', ok: false, why: 'Zusk refuses statements that would end the read-only transaction early, before anything is sent.' },
+  { sql: "WITH upgraded AS (\n  UPDATE users SET plan = 'pro'\n  RETURNING id\n)\nSELECT * FROM upgraded;", ok: false, why: 'A write hidden inside a CTE is still a write, and the database blocks it.' },
+  { sql: "SELECT nextval('order_id_seq');", ok: false, why: 'Tricky one: nextval() changes the sequence, so it is not allowed in a read-only transaction.' },
+  { sql: "SET work_mem = '64MB';", ok: true, why: 'SET is allowed, but in read-only mode it does not carry over, because every run is rolled back.' },
+  { sql: 'CREATE TEMP TABLE scratch AS\nSELECT 1;', ok: false, why: 'Every CREATE is disallowed in a read-only transaction, temporary tables included.' },
+  { sql: 'EXPLAIN SELECT * FROM invoices\nWHERE total > 500;', ok: true, why: 'EXPLAIN without ANALYZE only plans the query, so nothing changes.' },
+];
+
+/** Typing race snippets — real lines from the repos. Keep them short (one to three lines). */
+export const typingSnippets: { repo: string; code: string }[] = [
+  { repo: 'zusk', code: 'if read_only && editor.tx != TxState::Idle {\n    editor.client.batch_execute("ROLLBACK").await?;\n}' },
+  { repo: 'sentinel', code: 'const deficit = totalBills - userState.balances.checking;' },
+  { repo: 'smart-pdf-reader', code: "const words = selection.trim().split(/\\s+/).filter(Boolean);\nif (words.length === 1) return 'word';" },
+  { repo: 'ask-me', code: 'return sum(1 for r in self.recent if r.score <= self.config.negative_below)' },
+  { repo: 'zusk', code: 'client.batch_execute(&format!("SET default_transaction_read_only = {value}")).await?;' },
+];
+
+// ---------------------------------------------------------------------------
+// Badges — `how` is shown on the toast and the shelf.
+// ---------------------------------------------------------------------------
+
+export const badges = [
+  { id: 'terminal', icon: '>_', name: 'Found the terminal', how: 'Pressed ~' },
+  { id: 'night-owl', icon: '☾', name: 'Night owl', how: 'Visited between midnight and 5 am' },
+  { id: 'worthy', icon: '#', name: 'Worthy opponent', how: 'Drew with the minimax AI' },
+  { id: 'read-only', icon: '⛁', name: 'Read-only mind', how: 'Perfect score in “Would Zusk run this?”' },
+  { id: 'reader', icon: '≡', name: 'Read every case study', how: 'All five, start to finish' },
+  { id: 'blob', icon: '●', name: 'Blob whisperer', how: 'Annoyed the blob, then let it calm down' },
+  { id: 'typist', icon: '⌨', name: 'Speed typist', how: '60+ wpm at 95%+ accuracy' },
+  { id: 'retro', icon: '▚', name: 'Retro soul', how: 'Entered the Konami code' },
+  { id: 'stones', icon: '◆', name: 'Stone collector', how: 'Found all five stones' },
+] as const;
+
+export type BadgeId = (typeof badges)[number]['id'];
+
+/** Typing race result needed for the "Speed typist" badge. */
+export const typistBar = { wpm: 60, accuracy: 95 };

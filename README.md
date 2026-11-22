@@ -43,6 +43,13 @@ Copy and data for the playful parts of the site (demo scripts, glossary, and lat
 - **Playable demos.** The Sentinel and Ask-me case studies have a "Try it" section (`#demo`). Their home tiles get a small link to it. Tiles are listed in `demoTiles`, the Sentinel numbers and lines are in `sentinelSim`, and the call script and gauge values are in `askMeReplay`. Nothing plays until the visitor presses a button.
 - **Highlight to explain.** On any case-study page, selecting a word that's in `glossary` shows a short explanation card next to it. It closes when you click elsewhere, press Esc or use ×. To add a word, add `{ term, also?, text }`. Matching ignores case, surrounding punctuation and a trailing plural "s".
 
+- **/play.** Four small games and a leaderboard: "Would Zusk run this?", an unbeatable tic-tac-toe AI, a code typing race and the blob playground. It's linked as "Play" in the nav, or the "play" pill in the header on phones.
+  - *Add a SQL question:* append `{ sql, ok, why }` to `sqlQuestions`. `ok: true` means Zusk lets it through in read-only mode. The score and "perfect" check use the list length, so nothing else needs changing.
+  - *Add a typing snippet:* append `{ repo, code }` to `typingSnippets`. Keep it to one to three real lines. Indentation after a line break is filled in for the typist.
+  - *Page copy* (titles, intros, mood names) is in `playPage`.
+  - The SQL game and tic-tac-toe ship with the page so nothing shifts when they appear. The typing race, blob and leaderboard load as you scroll to them. The blob reuses `src/three/hero.ts` with `{ playground: true }`, which adds the poke squish and red tint.
+  - Personal bests (top five runs per game) and the tic-tac-toe tally are kept in `localStorage` under keys starting with `sv:`.
+
 ### Adding a case study
 
 1. Add a `caseStudy` to the project in `src/data.ts`. Order in `projects` = order on the site.
@@ -59,7 +66,10 @@ src/case.ts              case study page
 src/shared.ts            header tools, footer, boot()
 src/extras.ts            ← content for demos, games and secrets
 src/demos/               Sentinel mini-sim, Ask-me call replay, highlight-to-explain glossary
-src/lib/                 theme, terminal, tilt/reveal, formatting, env detection
+play/index.html          /play entry → src/play.ts
+src/games/               SQL quiz, minimax + tic-tac-toe, typing race, blob, leaderboard
+src/lib/                 theme, terminal, tilt/reveal, formatting, env detection,
+                         store (safe localStorage), scores, progress (badges)
 src/three/stage.ts       shared renderer plumbing (see below)
 src/three/hero.ts        noise-displaced fresnel glass blob, orbit rings
 src/three/particles.ts   page-wide particle field that parts around the cursor
