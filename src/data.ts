@@ -85,7 +85,7 @@ export const profile = {
   openToWork: true,
   headline: 'I build *calm* software dev tools, AI agents & real-time apps.',
   intro:
-    'Five years of shipping across Rust, TypeScript, Python and Flutter. I like quiet interfaces, fast feedback loops and software that asks before it acts.',
+    'Five years of shipping across Rust, TypeScript, Python and Golang. I like quiet interfaces, fast feedback loops and software that asks before it acts.',
   about:
     'Software engineer from India with five years of shipping products end to end: desktop dev tools in Rust, AI agents that know when to step aside, and real-time apps over WebRTC and WebSockets. I care about software that feels calm: fast, honest about what it is doing, and safe by default. [[Add a sentence about what you want to work on next.]]',
   email: 'shubhrankavarma@gmail.com',
