@@ -443,8 +443,8 @@ export const projects: Project[] = [
         { label: 'Links', value: '', links: [{ label: 'Source', href: `${GH}/chalky` }] },
       ],
       hero: {
-        alt: 'A Chalky board with shapes, sticky notes and two live cursors',
-        caption: '[[Screenshot placeholder: add public/work/chalky/board.png and set `src`]]',
+        src: '/work/chalky/board.png',
+        alt: "A Chalky board with sticky notes, shapes and pencil strokes, one note selected, and Maya's and Aarav's live cursors",
       },
       problem: {
         title: 'Thinking together needs a shared surface.',
