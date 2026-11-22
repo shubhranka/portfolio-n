@@ -1,5 +1,6 @@
 import { caseStudyHref, profile, projects } from '../data';
 import { esc, plain } from './dom';
+import { award, resetProgress } from './progress';
 import { getTheme, toggleTheme } from './theme';
 
 type Cmd = { desc: string; run: (args: string[]) => string | void; hidden?: boolean };
@@ -151,6 +152,15 @@ export function initTerminal() {
           ? `removed 'boredom' — try ${acc('play snake')}, ${acc('play 2048')} or ${acc('play ttt')}`
           : `rm: refusing to remove anything here. Try ${acc('rm -rf boredom')}.`,
     },
+    'reset-progress': {
+      desc: 'forget stones, badges and scores',
+      hidden: true,
+      run: ([flag]) => {
+        if (flag !== '--yes') return `This forgets stones, badges and scores in this browser. Run ${acc('reset-progress --yes')} to confirm.`;
+        resetProgress();
+        return 'progress reset.';
+      },
+    },
     clear: { desc: 'clear the screen', run: () => void (log.innerHTML = '') },
     exit: { desc: 'close the terminal', run: () => void close() },
   };
@@ -287,6 +297,7 @@ export function initTerminal() {
     lastFocus = document.activeElement;
     root.classList.add('open');
     document.body.style.overflow = 'hidden';
+    award('terminal');
     if (!greeted) {
       greeted = true;
       print(`Welcome. Type ${acc('help')} to see what you can do here.`, 'term-dim');

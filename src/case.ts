@@ -1,6 +1,7 @@
 import { caseStudies, caseStudyHref, type Architecture, type Shot } from './data';
 import { demoTiles, glossaryHint } from './extras';
-import { $, esc, fmt, icons, linkAttrs } from './lib/dom';
+import { $, $$, esc, fmt, icons, linkAttrs } from './lib/dom';
+import { findStone, markRead } from './lib/progress';
 import { boot, footer, headerTools } from './shared';
 
 const slug = document.body.dataset.slug;
@@ -166,7 +167,28 @@ if (demo) {
     if (location.hash === '#demo') demo.scrollIntoView();
   });
 }
-void import('./demos/glossary').then(({ initGlossary }) => initGlossary($('main')!));
+void import('./demos/glossary').then(({ initGlossary, onHighlight }) => {
+  initGlossary($('main')!);
+  // Hidden stone: highlight the last word of the Zusk case study.
+  if (project.slug !== 'zusk') return;
+  const last = $$('.prose li').pop();
+  const word = (s: string) => s.replace(/[^\p{L}\p{N}-]/gu, '').toLowerCase();
+  const target = word(last?.textContent?.trim().split(/\s+/).pop() ?? '');
+  onHighlight((text, range) => {
+    if (target && last?.contains(range.commonAncestorContainer) && word(text) === target) findStone('zusk');
+  });
+});
+
+// Reaching the "next case study" card counts as reading this one.
+const end = $('.next-card');
+if (end && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    markRead(project.slug, caseStudies.map((p) => p.slug));
+  });
+  io.observe(end);
+}
 
 const start = () => import('./three/particles').then(({ initParticles }) => initParticles($('#particles')!));
 if ('requestIdleCallback' in window) requestIdleCallback(() => void start(), { timeout: 800 });

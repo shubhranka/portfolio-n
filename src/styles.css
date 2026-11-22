@@ -811,6 +811,121 @@ kbd { font-family: var(--mono); font-size: 11px; padding: 1px 6px; border-radius
 }
 
 /* ------------------------------------------------------------------------
+   Secrets: stones, badges, toasts, CRT (src/lib/secrets.ts, konami.ts)
+   ------------------------------------------------------------------------ */
+.stone-counter {
+  display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0 12px;
+  border-radius: 999px; border: 1px solid var(--line); background: none; cursor: pointer;
+}
+.stone-counter[hidden] { display: none; }
+.stone-counter:hover { border-color: var(--line-strong); }
+.stone-counter i, .shelf-stones i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); }
+.stone-counter i.on, .shelf-stones .on i { background: var(--accent); }
+.stone-counter i.fresh { animation: stone-glow 2.4s var(--ease) 2; }
+@keyframes stone-glow { 50% { box-shadow: 0 0 0 4px var(--accent-wash), 0 0 14px var(--accent); } }
+
+.footer-stone {
+  display: inline-grid; place-items: center; width: 44px; height: 44px; margin: -14px -8px -14px 2px;
+  border: none; background: none; cursor: pointer; vertical-align: middle;
+}
+.footer-stone i { width: 5px; height: 5px; border-radius: 50%; background: var(--faint); transition: background-color 0.4s, box-shadow 0.4s; }
+.footer-stone:hover i { background: var(--accent); }
+.footer-stone.stone-glow i { background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: stone-glow 2.4s var(--ease) 2; }
+
+.toasts {
+  position: fixed; right: 16px; bottom: 16px; z-index: 120; width: min(320px, calc(100vw - 32px));
+  display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+}
+.toast {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px;
+  border: 1px solid var(--line-strong); background: color-mix(in srgb, var(--surface-3) 94%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: var(--shadow);
+  animation: rise 0.35s var(--ease); transition: opacity 0.35s, transform 0.35s var(--ease);
+}
+.toast.out { opacity: 0; transform: translateY(8px); }
+.toast-icon {
+  flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); color: var(--accent-text); font: 14px var(--mono);
+}
+.toast > div { display: flex; flex-direction: column; min-width: 0; }
+.toast-label { font-size: 11px; color: var(--muted); }
+.toast b { font-size: 14px; font-weight: 600; }
+.toast b + span { font-size: 12px; color: var(--muted); }
+
+.badge-chip { min-height: 44px; }
+.shelf {
+  width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 24px 28px 28px;
+  border-radius: 24px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+}
+.shelf::backdrop { background: rgba(8, 7, 6, 0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.shelf-head { display: flex; justify-content: space-between; align-items: center; }
+.shelf h2 { margin: 0; font: 400 32px/1.1 var(--serif); }
+.shelf-x { width: 44px; height: 44px; margin-right: -12px; border: none; background: none; color: var(--muted); font-size: 22px; cursor: pointer; }
+.shelf section { margin-top: 20px; }
+.shelf h3 { margin: 0 0 10px; display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--soft); }
+.shelf h3 span { font: 12px var(--mono); color: var(--muted); }
+.shelf ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.shelf-stones li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.shelf-stones li.on { color: var(--text); }
+.shelf-unlocked { margin: 12px 0 0; font-size: 14px; color: var(--ok-text); }
+.shelf-unlocked a { color: var(--accent-text); text-decoration: underline; text-underline-offset: 3px; }
+.shelf-badges { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.shelf-badges li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--line); }
+.shelf-badges li:not(.on) b { color: var(--muted); font-weight: 500; }
+.shelf-badges li:not(.on) div span { color: var(--faint); }
+.shelf-badges li.on { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); background: var(--accent-wash); }
+.shelf-badges b { display: block; font-size: 13px; }
+.shelf-badges div span { font-size: 12px; color: var(--muted); }
+.shelf-badges li:not(.on) .toast-icon { color: var(--faint); border-color: var(--line); }
+.shelf-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 24px; font-size: 14px; color: var(--soft); }
+.btn-danger { border-color: color-mix(in srgb, var(--bad) 50%, var(--line)); color: var(--bad-text); }
+.btn-danger:hover { color: var(--bad-text); border-color: var(--bad); }
+
+.secret { display: grid; place-items: center; min-height: 70vh; padding-top: 40px; padding-bottom: 72px; }
+.secret-card {
+  display: flex; flex-direction: column; gap: 18px; max-width: 640px; padding: 40px;
+  border-radius: 28px; border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  background: radial-gradient(120% 80% at 0% 0%, var(--accent-wash), transparent 60%), var(--surface);
+}
+.secret-card h1 { margin: 0; font: 400 clamp(40px, 6vw, 56px)/1.02 var(--serif); letter-spacing: -0.02em; }
+.secret-card h1 em { color: var(--accent-text); }
+.secret-card p { margin: 0; font-size: 17px; line-height: 1.65; color: var(--soft); }
+.secret-card.is-locked { border-color: var(--line); background: var(--surface); }
+.secret-card.is-locked .btn { align-self: flex-start; }
+
+/* Konami → CRT. Amber phosphor on black; the scanlines never take the pointer. */
+:root[data-crt] {
+  color-scheme: dark;
+  --bg: #0a0703; --surface: #120c05; --surface-2: #0f0a04; --surface-3: #171007;
+  --line: #3a2a10; --line-soft: #2a1e0c; --line-strong: #5a4220;
+  --text: #ffc266; --soft: #f5b041; --muted: #d99a2b; --faint: #b5801f;
+  --accent: #ffd27a; --accent-text: #ffd27a; --accent-soft: #ffd27a; --accent-ink: #1a1008; --accent-wash: rgba(255, 194, 102, 0.12);
+  --ok: #ffd27a; --ok-text: #ffd27a; --bad: #ff9e5e; --bad-text: #ffb37a; --info: #ffd27a;
+  --serif: 'VT323', ui-monospace, monospace; --sans: 'VT323', ui-monospace, monospace; --mono: 'VT323', ui-monospace, monospace;
+  font-size-adjust: 0.62;
+}
+:root[data-crt] body { text-shadow: 0 0 6px rgba(245, 165, 36, 0.55); }
+:root[data-crt] body::after {
+  content: ''; position: fixed; inset: 0; z-index: 200; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.28) 0 1px, transparent 1px 3px);
+  box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.85);
+  animation: crt-flicker 6s steps(1) infinite;
+}
+@keyframes crt-flicker { 50% { opacity: 0.92; } }
+:root[data-crt] img, :root[data-crt] canvas { filter: sepia(1) saturate(2.4) hue-rotate(-12deg) brightness(0.9); }
+
+@media (max-width: 520px) {
+  .header-tools { gap: 8px; }
+  .kbd-hint { white-space: nowrap; }
+  .stone-counter { gap: 4px; padding: 0 10px; }
+  .stone-counter i { width: 7px; height: 7px; }
+}
+@media (max-width: 600px) {
+  .shelf { padding: 20px; }
+  .secret-card { padding: 28px 22px; }
+}
+
+/* ------------------------------------------------------------------------
    Responsive
    ------------------------------------------------------------------------ */
 @media (max-width: 960px) {

@@ -1,6 +1,8 @@
 import './styles.css';
 import { profile } from './data';
 import { icons } from './lib/dom';
+import { initKonami } from './lib/konami';
+import { initSecrets } from './lib/secrets';
 import { initTerminal } from './lib/terminal';
 import { bindThemeToggles } from './lib/theme';
 import { initReveal, initTilt } from './lib/tilt';
@@ -8,6 +10,7 @@ import { initReveal, initTilt } from './lib/tilt';
 /** Header tools shared by every page: terminal hint + theme toggle. */
 export const headerTools = `
   <div class="header-tools">
+    <button class="stone-counter" type="button" data-stones data-shelf hidden></button>
     <a class="kbd-hint tool-play" href="/play/">play</a>
     <button class="kbd-hint" type="button" data-terminal aria-label="Open terminal (press ~)">press ~</button>
     <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">${icons.moon}${icons.sun}</button>
@@ -28,7 +31,7 @@ export const pageHeader = (current: 'play' | '') => `
 
 export const footer = `
   <footer class="wrap site-footer">
-    <span>© ${new Date().getFullYear()} ${profile.name}</span>
+    <span>© ${new Date().getFullYear()} ${profile.name}<button class="footer-stone" type="button" data-stone="footer" aria-label="A small amber stone"><i></i></button></span>
     <span>Built quietly · press ~ for a terminal</span>
   </footer>`;
 
@@ -38,4 +41,6 @@ export function boot() {
   initTerminal();
   initTilt();
   initReveal();
+  initSecrets();
+  initKonami();
 }

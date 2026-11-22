@@ -32,7 +32,7 @@ $('#app')!.innerHTML = `
       <span class="eyebrow">${esc(t.eyebrow)}</span>
       <div class="play-title">
         <h1 class="h2">${fmt(t.title)}</h1>
-        <div class="play-tools"></div>
+        <div class="play-tools"><button class="kbd-hint badge-chip" type="button" data-shelf data-badge-count></button></div>
       </div>
     </section>
     <section class="wrap play-grid">

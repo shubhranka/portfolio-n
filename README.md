@@ -50,6 +50,20 @@ Copy and data for the playful parts of the site (demo scripts, glossary, and lat
   - The SQL game and tic-tac-toe ship with the page so nothing shifts when they appear. The typing race, blob and leaderboard load as you scroll to them. The blob reuses `src/three/hero.ts` with `{ playground: true }`, which adds the poke squish and red tint.
   - Personal bests (top five runs per game) and the tic-tac-toe tally are kept in `localStorage` under keys starting with `sv:`.
 
+- **Hidden stones.** There are five, listed in `stones`:
+  - the dot beside © in the footer
+  - every 5th Snake food
+  - the `stoneTag` on the toolbox sphere (Three.js, marked ◆)
+  - highlighting the last word of the Zusk case study (currently the last word of its last "What I learned" item, so it moves when you rewrite that text)
+  - a perfect score in the SQL game
+
+  Each find glows and shows a toast. The nav counter stays hidden until the first find, then fills five amber dots. Clicking it opens the progress shelf. 5/5 unlocks `/secret`, whose note is `secretNote` (marked TODO). `/secret` is only locked in the browser, so the note is visible to anyone who reads the source.
+- **Badges.** There are nine, in `badges`. Toasts appear bottom-right, stack up to three, leave after four seconds and let clicks pass through. The shelf opens from the stone counter or the "Badges earned" chip on /play.
+  - *Add a badge:* add `{ id, icon, name, how }` to `badges`, then call `award('<id>')` from `src/lib/progress.ts` wherever it's earned.
+  - *Speed typist:* the threshold is `typistBar`.
+- **Konami code** (↑↑↓↓←→←→BA) switches to CRT mode: VT323 font, scanlines and amber phosphor. Esc exits. It doesn't persist, and the font loads only when you first enter the code.
+- **Progress** (stones, badges, scores, tallies) lives in `localStorage` under `sv:` keys, and every access is wrapped in try/catch. "Reset progress" in the shelf, or `reset-progress --yes` in the terminal, clears it. The theme is kept.
+
 ### Adding a case study
 
 1. Add a `caseStudy` to the project in `src/data.ts`. Order in `projects` = order on the site.
@@ -67,9 +81,11 @@ src/shared.ts            header tools, footer, boot()
 src/extras.ts            ← content for demos, games and secrets
 src/demos/               Sentinel mini-sim, Ask-me call replay, highlight-to-explain glossary
 play/index.html          /play entry → src/play.ts
+secret/index.html        /secret entry → src/secret.ts (noindex)
 src/games/               SQL quiz, minimax + tic-tac-toe, typing race, blob, leaderboard
 src/lib/                 theme, terminal, tilt/reveal, formatting, env detection,
-                         store (safe localStorage), scores, progress (badges)
+                         store (safe localStorage), scores, progress (stones + badges),
+                         secrets (counter, shelf, toasts), toast, konami
 src/three/stage.ts       shared renderer plumbing (see below)
 src/three/hero.ts        noise-displaced fresnel glass blob, orbit rings
 src/three/particles.ts   page-wide particle field that parts around the cursor

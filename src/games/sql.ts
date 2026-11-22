@@ -1,14 +1,9 @@
 import { playPage, sqlQuestions as qs } from '../extras';
 import { esc } from '../lib/dom';
-import { award } from '../lib/progress';
+import { award, findStone } from '../lib/progress';
 import { record } from '../lib/scores';
 
 const t = playPage.sql;
-type Listener = () => void;
-const perfectListeners: Listener[] = [];
-/** Hidden stones hook in here. */
-export const onPerfect = (fn: Listener) => perfectListeners.push(fn);
-
 /** "Would Zusk run this?" — allow or block each statement under read-only mode. */
 export function mount(card: HTMLElement) {
   const meta = card.querySelector<HTMLElement>('.game-meta')!;
@@ -68,7 +63,7 @@ export function mount(card: HTMLElement) {
     record('sql', score, `${score} / ${qs.length}`);
     if (score === qs.length) {
       award('read-only');
-      perfectListeners.forEach((fn) => fn());
+      findStone('sql');
     }
   }
 

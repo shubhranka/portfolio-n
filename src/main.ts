@@ -1,6 +1,7 @@
 import { caseStudies, caseStudyHref, lab, profile, projects, sphereTags, toolbox, type Project } from './data';
-import { demoTiles } from './extras';
+import { demoTiles, stoneTag } from './extras';
 import { $, esc, fmt, icons, linkAttrs } from './lib/dom';
+import { findStone } from './lib/progress';
 import { boot, footer, headerTools } from './shared';
 
 const ph = (on?: boolean) => (on ? ' data-placeholder title="Placeholder — replace in src/data.ts"' : '');
@@ -127,8 +128,9 @@ app.innerHTML = `
 
 
     <section class="wrap section toolbox" aria-labelledby="toolbox-h">
-      <div class="sphere-stage" id="sphere-stage" role="img" aria-label="Rotating 3D sphere of technology names: ${esc(sphereTags.join(', '))}. Drag to spin.">
+      <div class="sphere-stage" id="sphere-stage" role="img" aria-label="Rotating 3D sphere of technology names: ${esc(sphereTags.join(', '))}. Drag or use the arrow keys to spin; Enter picks the tag in front.">
         <span class="sphere-hint" aria-hidden="true">drag to spin</span>
+        <span class="sr-only" aria-live="polite" id="sphere-live"></span>
       </div>
       <div class="toolbox-copy reveal">
         <span class="eyebrow">02 — Toolbox</span>
@@ -208,7 +210,13 @@ const startScenes = async () => {
   initParticles($('#particles')!);
   initHero($('#hero-stage')!);
   initWave($('#wave-stage')!);
-  const sphere = await initTagSphere($('#sphere-stage')!, sphereTags);
+  const sphere = await initTagSphere($('#sphere-stage')!, sphereTags, {
+    marked: stoneTag,
+    onPick: (name) => {
+      $('#sphere-live')!.textContent = name;
+      if (name === stoneTag) findStone('sphere');
+    },
+  });
   if (sphere) {
     document.querySelectorAll<HTMLElement>('.chip[data-tag]').forEach((chip) => {
       chip.addEventListener('pointerenter', () => sphere.highlight(chip.dataset.tag!));

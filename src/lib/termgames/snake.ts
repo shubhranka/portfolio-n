@@ -1,3 +1,4 @@
+import { findStone } from '../progress';
 import { load, save } from '../store';
 import type { AppStart } from '../terminal';
 
@@ -7,10 +8,6 @@ const TICK_MS = 115;
 /** Every Nth food is amber — eating it finds a hidden stone. */
 const STONE_EVERY = 5;
 const C = { bg: '#1a1714', grid: '#201c18', food: '#e6e0d7', stone: '#f5a524', head: '#ffe3a8' };
-
-type Listener = () => void;
-const stoneListeners: Listener[] = [];
-export const onStone = (fn: Listener) => stoneListeners.push(fn);
 
 export const start: AppStart = (host, exit) => {
   const cols = host.clientWidth < 520 ? 16 : 24;
@@ -90,7 +87,7 @@ export const start: AppStart = (host, exit) => {
     snake.unshift(head);
     if (head.x === food.x && head.y === food.y) {
       if (isStone()) {
-        stoneListeners.forEach((fn) => fn());
+        findStone('snake');
         foot.textContent = '◆ that one was amber — a hidden stone.';
       }
       eaten++;

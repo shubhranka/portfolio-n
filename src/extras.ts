@@ -190,3 +190,48 @@ export type BadgeId = (typeof badges)[number]['id'];
 
 /** Typing race result needed for the "Speed typist" badge. */
 export const typistBar = { wpm: 60, accuracy: 95 };
+
+// ---------------------------------------------------------------------------
+// Hidden stones. `where` is only revealed once that stone is found.
+// ---------------------------------------------------------------------------
+
+export const stones = [
+  { id: 'footer', where: 'In the footer, beside the copyright line' },
+  { id: 'snake', where: 'Every 5th food in terminal Snake' },
+  { id: 'sphere', where: 'One tag on the spinning toolbox sphere' },
+  { id: 'zusk', where: 'Highlight the last word of the Zusk case study' },
+  { id: 'sql', where: 'Perfect score in “Would Zusk run this?”' },
+] as const;
+
+export type StoneId = (typeof stones)[number]['id'];
+
+/** The sphere tag that hides a stone (must be in `sphereTags` in data.ts). */
+export const stoneTag = 'Three.js';
+
+export const secretsCopy = {
+  counterLabel: 'Stones found',
+  shelfTitle: 'Your progress',
+  stonesTitle: 'Stones',
+  badgesTitle: 'Badges',
+  hidden: 'Still hidden',
+  unlocked: 'All five found — the secret page is open.',
+  openSecret: 'Open the secret page →',
+  reset: 'Reset progress',
+  resetConfirm: 'This forgets stones, badges and scores in this browser. Reset?',
+  resetDone: 'Progress reset.',
+  stoneToast: 'Stone found',
+  badgeToast: 'Badge unlocked',
+  crtHint: 'CRT mode · press Esc to return to 2026',
+};
+
+/** /secret — shown once all five stones are found. */
+export const secretNote = {
+  eyebrow: '5 / 5 · secret page unlocked',
+  title: 'You’re thorough. *I like that.*',
+  body: [
+    'Most people scroll past. You found all five stones, which is the same attention to detail I try to put into the things I build. If you’re hiring, or just want to talk about calm software, write to me and mention the stones.',
+    '[[TODO: rewrite this note in your own voice.]]',
+  ],
+  locked: 'Not yet. You’ve found {n} of 5 stones — keep looking.',
+  lockedHint: 'Hint: one hides in the footer of every page.',
+};

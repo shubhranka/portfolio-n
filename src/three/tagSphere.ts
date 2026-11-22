@@ -26,8 +26,15 @@ function makeLabel(text: string) {
   return { tex, aspect: w / h };
 }
 
+export interface SphereOptions {
+  /** This tag gets a small ◆ and always shows in the accent colour. */
+  marked?: string;
+  /** Called when a tag is clicked, tapped, or picked with Enter. */
+  onPick?: (name: string) => void;
+}
+
 /** Rotating, draggable sphere of skill names. */
-export async function initTagSphere(host: HTMLElement, names: string[]) {
+export async function initTagSphere(host: HTMLElement, names: string[], opts: SphereOptions = {}) {
   try {
     await document.fonts.load(`500 ${FONT_PX}px "JetBrains Mono"`);
   } catch {
@@ -44,13 +51,13 @@ export async function initTagSphere(host: HTMLElement, names: string[]) {
     const y = 1 - (k / (n - 1)) * 2;
     const r = Math.sqrt(1 - y * y);
     const th = k * 2.39996;
-    const { tex, aspect } = makeLabel(name);
+    const { tex, aspect } = makeLabel(name === opts.marked ? `${name} ◆` : name);
     const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false });
     const s = new THREE.Sprite(mat);
     const h = 0.2;
     s.scale.set(h * aspect, h, 1);
     s.position.set(Math.cos(th) * r * R, y * R, Math.sin(th) * r * R);
-    s.userData = { name, accent: k % 4 === 0, base: s.scale.clone() };
+    s.userData = { name, accent: k % 4 === 0 || name === opts.marked, base: s.scale.clone() };
     group.add(s);
     return s;
   });
@@ -109,9 +116,44 @@ export async function initTagSphere(host: HTMLElement, names: string[]) {
   stage.scene.add(group);
   stage.invalidate();
 
+  // Click or tap (without dragging) picks the nearest front-facing tag, within a
+  // forgiving radius — the labels are small and always moving.
+  const PICK_PX = 28;
+  let travel = 0;
+  const pickAt = (x: number, y: number) => {
+    const r = host.getBoundingClientRect();
+    let best: THREE.Sprite | null = null;
+    let bestD = PICK_PX;
+    for (const s of sprites) {
+      s.getWorldPosition(v);
+      if (v.z < 0) continue;
+      v.project(camera);
+      const d = Math.hypot(((v.x + 1) / 2) * r.width + r.left - x, ((1 - v.y) / 2) * r.height + r.top - y);
+      if (d < bestD) [best, bestD] = [s, d];
+    }
+    if (best) opts.onPick?.(best.userData.name);
+  };
+
+  // Keyboard: arrows spin, Enter or Space picks the tag nearest the front.
+  host.tabIndex = 0;
+  host.addEventListener('keydown', (e) => {
+    const k = 0.35;
+    const turn = { ArrowLeft: [0, -k], ArrowRight: [0, k], ArrowUp: [-k, 0], ArrowDown: [k, 0] }[e.key];
+    if (turn) {
+      e.preventDefault();
+      rotate(turn[0], turn[1]);
+      stage.invalidate();
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const front = sprites.reduce((best, s) => (s.getWorldPosition(v).z > best.z ? { s, z: v.z } : best), { s: sprites[0], z: -Infinity });
+      opts.onPick?.(front.s.userData.name);
+    }
+  });
+
   // Drag to spin, with inertia on release.
   const el = host;
   el.addEventListener('pointerdown', (e) => {
+    travel = 0;
     drag.on = true;
     drag.x = e.clientX;
     drag.y = e.clientY;
@@ -125,6 +167,7 @@ export async function initTagSphere(host: HTMLElement, names: string[]) {
     const dt = Math.max((now - drag.t) / 1000, 1 / 120);
     const dx = e.clientX - drag.x;
     const dy = e.clientY - drag.y;
+    travel += Math.abs(dx) + Math.abs(dy);
     const k = 0.006;
     rotate(dy * k, dx * k);
     spin.x = (dy * k) / dt;
@@ -141,7 +184,10 @@ export async function initTagSphere(host: HTMLElement, names: string[]) {
     spin.x = THREE.MathUtils.clamp(spin.x, -cap, cap);
     spin.y = THREE.MathUtils.clamp(spin.y, -cap, cap);
   };
-  el.addEventListener('pointerup', end);
+  el.addEventListener('pointerup', (e) => {
+    end();
+    if (travel < 6) pickAt(e.clientX, e.clientY);
+  });
   el.addEventListener('pointercancel', end);
 
   return {
