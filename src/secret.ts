@@ -4,10 +4,10 @@ import { $, esc, fmt, linkAttrs } from './lib/dom';
 import { found } from './lib/progress';
 import { boot, footer, pageHeader } from './shared';
 
-const ph = (on?: boolean) => (on ? ' data-placeholder title="Placeholder — replace in src/data.ts"' : '');
+const ph = (on?: boolean) => (on ? ' data-placeholder title="Placeholder: replace in src/data.ts"' : '');
 const n = found().size;
 
-// Only unlocked in this browser — the note is in the page source for anyone who looks.
+// Only unlocked in this browser. The note is in the page source for anyone who looks.
 $('#app')!.innerHTML = `
   ${pageHeader('')}
   <main class="wrap secret">

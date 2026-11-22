@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------
-   Tokens — dark first, warm paper white for light
+   Tokens: dark first, warm paper white for light
    ------------------------------------------------------------------------ */
 :root {
   color-scheme: dark;
@@ -97,7 +97,7 @@ h1 em, h2 em, .accent-em em { color: var(--accent-text); }
 .skip { position: absolute; left: 16px; top: -60px; z-index: 50; background: var(--accent); color: var(--accent-ink); padding: 10px 14px; border-radius: 10px; }
 .skip:focus { top: 16px; }
 
-/* Placeholders — intentionally visible until replaced */
+/* Placeholders: intentionally visible until replaced */
 .ph {
   font-style: normal;
   font-family: var(--mono);
@@ -445,7 +445,7 @@ h1 em, h2 em, .accent-em em { color: var(--accent-text); }
   font: inherit; color: #f2eee8; caret-color: #f5a524;
 }
 .term-input-row[hidden] { display: none; }
-/* Games inside the terminal (src/lib/termgames/) — the terminal is dark in both themes. */
+/* Games inside the terminal (src/lib/termgames/). The terminal is dark in both themes. */
 .term-app { margin: 10px 0 4px; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; color: #c9c2b8; outline: none; }
 .term-app:focus-visible .term-board { outline: 1px solid #5a4220; outline-offset: 4px; }
 .term-app-done { opacity: 0.55; }
@@ -928,7 +928,7 @@ kbd { font-family: var(--mono); font-size: 11px; padding: 1px 6px; border-radius
 }
 
 /* ------------------------------------------------------------------------
-   Live (src/live/) — only rendered when VITE_LIVE=true
+   Live (src/live/): only rendered when VITE_LIVE=true
    ------------------------------------------------------------------------ */
 .live-pill {
   display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;

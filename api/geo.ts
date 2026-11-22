@@ -9,7 +9,7 @@ export default function handler(req: Request) {
   try {
     city = raw ? decodeURIComponent(raw).slice(0, 40) : '';
   } catch {
-    /* malformed header — no city */
+    /* malformed header, so no city */
   }
   return new Response(JSON.stringify({ city }), {
     headers: { 'content-type': 'application/json', 'cache-control': 'private, no-store' },

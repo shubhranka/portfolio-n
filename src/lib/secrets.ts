@@ -9,7 +9,7 @@ function renderCounters(fresh?: string) {
   const have = found();
   $$('[data-stones]').forEach((b) => {
     b.hidden = have.size === 0;
-    b.setAttribute('aria-label', `${t.counterLabel}: ${have.size} of ${stones.length} — open your progress`);
+    b.setAttribute('aria-label', `${t.counterLabel}: ${have.size} of ${stones.length}. Open your progress.`);
     b.innerHTML = stones.map((s) => `<i class="${have.has(s.id) ? 'on' : ''}${s.id === fresh ? ' fresh' : ''}"></i>`).join('');
   });
   const n = earned().size;
@@ -83,7 +83,7 @@ function openShelf() {
   shelf.showModal();
 }
 
-/** Stones, badges and their UI — shared by every page. */
+/** Stones, badges and their UI, shared by every page. */
 export function initSecrets() {
   renderCounters();
   document.addEventListener('click', (e) => {

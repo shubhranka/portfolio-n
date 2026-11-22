@@ -1,4 +1,4 @@
-# Shubhranka Varma — Portfolio
+# Shubhranka Varma · Portfolio
 
 "Calm Software": a dark-first personal site built with Vite, TypeScript and Three.js. It has a home page, five case studies and a `~` terminal.
 

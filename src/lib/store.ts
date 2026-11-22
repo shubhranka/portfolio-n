@@ -17,7 +17,7 @@ export function save(key: string, value: unknown) {
   try {
     localStorage.setItem(PREFIX + key, JSON.stringify(value));
   } catch {
-    /* storage unavailable — progress just won't persist */
+    /* storage unavailable, so progress just won't persist */
   }
 }
 

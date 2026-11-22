@@ -44,7 +44,7 @@ export async function mountGuestbook(host: HTMLElement) {
     ? data
         .map(
           (n, i) =>
-            `<li style="--rot:${((i * 37) % 9) - 4}deg;background:${liveColors[i % liveColors.length]}"><p>${esc(n.message)}</p><span>— ${esc(n.name)}</span></li>`,
+            `<li style="--rot:${((i * 37) % 9) - 4}deg;background:${liveColors[i % liveColors.length]}"><p>${esc(n.message)}</p><span>${esc(n.name)}</span></li>`,
         )
         .join('')
     : `<li class="notes-empty">${esc(t.empty)}</li>`;

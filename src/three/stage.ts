@@ -17,7 +17,7 @@ export interface StageOptions {
 export interface Stage {
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
-  /** Draw one frame now — used for still frames and after state changes while paused. */
+  /** Draw one frame now. Used for still frames and after state changes while paused. */
   invalidate: () => void;
   readonly size: { w: number; h: number };
 }

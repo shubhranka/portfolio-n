@@ -4,7 +4,7 @@ import { $, esc, fmt, icons, linkAttrs } from './lib/dom';
 import { findStone } from './lib/progress';
 import { boot, footer, headerTools } from './shared';
 
-const ph = (on?: boolean) => (on ? ' data-placeholder title="Placeholder — replace in src/data.ts"' : '');
+const ph = (on?: boolean) => (on ? ' data-placeholder title="Placeholder: replace in src/data.ts"' : '');
 
 const tags = (p: Project) => `<div class="tags">${p.stack.map((s) => `<span class="tag">${esc(s)}</span>`).join('')}</div>`;
 
@@ -44,7 +44,7 @@ function bentoTile(p: Project, i: number) {
       ? `<div class="tile-top"><span class="tile-kind">${esc(p.kind)}</span><span class="cs">Case study ↗</span></div>`
       : `<span class="tile-kind">${esc(p.kind)}</span>`;
   const tile = `
-    <a class="tile ${demoTiles[p.slug] ? '' : size}${extra}" href="${caseStudyHref(p.slug)}" aria-label="${esc(p.name)} — case study">
+    <a class="tile ${demoTiles[p.slug] ? '' : size}${extra}" href="${caseStudyHref(p.slug)}" aria-label="${esc(p.name)} case study">
       ${top}
       <h3>${esc(p.name)}</h3>
       <p>${fmt(p.blurb)}</p>
@@ -56,7 +56,7 @@ function bentoTile(p: Project, i: number) {
   return `
     <div class="tile-slot ${size}">
       ${tile}
-      <a class="tile-demo" href="${caseStudyHref(p.slug)}#demo" aria-label="${esc(`${demoTiles[p.slug]} — ${p.name}`)}">
+      <a class="tile-demo" href="${caseStudyHref(p.slug)}#demo" aria-label="${esc(`${demoTiles[p.slug]}: ${p.name}`)}">
         <span aria-hidden="true">▶</span>${esc(demoTiles[p.slug])}
       </a>
     </div>`;
@@ -80,7 +80,7 @@ app.innerHTML = `
   <div class="glow" aria-hidden="true"></div>
 
   <header class="wrap site-header">
-    <a class="brand" href="#top" aria-label="${esc(profile.name)} — home">
+    <a class="brand" href="#top" aria-label="${esc(profile.name)}, home">
       <span class="brand-mark">${esc(profile.name[0])}</span>
       <span class="brand-name">${esc(profile.name)}</span>
     </a>
@@ -93,13 +93,7 @@ app.innerHTML = `
   <main>
     <section id="top" class="wrap hero">
       <div class="hero-copy">
-        <div class="profile-card">
-          <div class="avatar"${ph(!profile.photo)} role="img" aria-label="${profile.photo ? esc(profile.name) : 'Photo placeholder'}">
-            ${profile.photo ? `<img src="${esc(profile.photo)}" alt="" />` : esc(profile.initials)}
-          </div>
-          <div class="profile-text"><b>${esc(profile.role)}</b><span>${esc(profile.meta)}</span></div>
-          ${profile.openToWork ? '<span class="badge-open"><i></i>Open to work</span>' : ''}
-        </div>
+        
         <h1 class="hero-h">${fmt(profile.headline)}</h1>
         <p class="hero-p">${fmt(profile.intro)}</p>
         <div class="hero-actions">
@@ -117,7 +111,7 @@ app.innerHTML = `
     <section id="work" class="wrap section">
       <div class="section-head reveal">
         <div>
-          <span class="eyebrow">01 — Selected work</span>
+          <span class="eyebrow">01 · Selected work</span>
           <h2 class="h2">Things I've built, carefully.</h2>
         </div>
         <a class="muted-link" ${linkAttrs(profile.github)}>All ${esc(profile.repoCount)} repos on GitHub →</a>
@@ -133,7 +127,7 @@ app.innerHTML = `
         <span class="sr-only" aria-live="polite" id="sphere-live"></span>
       </div>
       <div class="toolbox-copy reveal">
-        <span class="eyebrow">02 — Toolbox</span>
+        <span class="eyebrow">02 · Toolbox</span>
         <h2 class="h2" id="toolbox-h">The tools I reach for.</h2>
         ${toolbox
           .map(
@@ -150,7 +144,7 @@ app.innerHTML = `
     <section id="lab" class="wrap section">
       <div class="section-head reveal">
         <div>
-          <span class="eyebrow">03 — Lab</span>
+          <span class="eyebrow">03 · Lab</span>
           <h2 class="h2">Experiments &amp; <em>side quests.</em></h2>
         </div>
       </div>
@@ -171,7 +165,7 @@ app.innerHTML = `
     <section id="contact" class="contact">
       <div class="wave-stage" id="wave-stage" aria-hidden="true"></div>
       <div class="wave-fade" aria-hidden="true"></div>
-      <span class="eyebrow">04 — Contact</span>
+      <span class="eyebrow">04 · Contact</span>
       <h2>Let's build something <em>calm.</em></h2>
       <a class="btn btn-mail" href="mailto:${esc(profile.email)}" data-copy="${esc(profile.email)}">${esc(profile.email)}</a>
       <span class="copied" aria-live="polite"></span>
@@ -186,7 +180,7 @@ app.innerHTML = `
 
 boot();
 
-// Copy the address too — mailto alone fails silently when there's no mail client.
+// Copy the address too: mailto alone fails silently when there's no mail client.
 const mail = $<HTMLAnchorElement>('[data-copy]')!;
 mail.addEventListener('click', () => {
   navigator.clipboard?.writeText(mail.dataset.copy!).then(
@@ -229,5 +223,5 @@ else setTimeout(() => void startScenes(), 1);
 
 if (import.meta.env.DEV) {
   const n = document.querySelectorAll('.ph, [data-placeholder]').length;
-  if (n) console.info(`[portfolio] ${n} placeholders on this page — search src/data.ts for "[[" and "placeholder: true".`);
+  if (n) console.info(`[portfolio] ${n} placeholders on this page. Search src/data.ts for "[[" and "placeholder: true".`);
 }

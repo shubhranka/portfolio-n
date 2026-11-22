@@ -15,7 +15,7 @@ export function mount(card: HTMLElement) {
   let thinking = false;
 
   body.innerHTML = `
-    <div class="ttt" role="group" aria-label="Tic-tac-toe board — arrow keys move between squares">
+    <div class="ttt" role="group" aria-label="Tic-tac-toe board. Arrow keys move between squares.">
       ${Array.from({ length: 9 }, (_, i) => `<button type="button" class="ttt-cell" data-i="${i}"></button>`).join('')}
     </div>
     <div class="game-foot">

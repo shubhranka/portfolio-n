@@ -77,7 +77,7 @@ export function initWave(host: HTMLElement) {
   };
   applyTheme();
 
-  // Project the cursor onto the plane analytically — cheaper than raycasting triangles.
+  // Project the cursor onto the plane analytically, which is cheaper than raycasting triangles.
   const ray = new THREE.Raycaster();
   const plane = new THREE.Plane();
   const ndc = new THREE.Vector2();

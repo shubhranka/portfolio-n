@@ -3,7 +3,7 @@ import { load, save } from './store';
 export type Game = 'sql' | 'typing';
 
 export interface Score {
-  /** What the list sorts by — higher is better. */
+  /** What the list sorts by. Higher is better. */
   value: number;
   label: string;
   at: number;

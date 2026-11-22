@@ -11,7 +11,7 @@ export function setTheme(theme: Theme) {
   try {
     localStorage.setItem(KEY, theme);
   } catch {
-    /* storage unavailable — theme just won't persist */
+    /* storage unavailable, so theme just won't persist */
   }
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#F6F2EA' : '#0E0D0C');
   document.querySelectorAll('[data-theme-toggle]').forEach((b) =>
@@ -25,7 +25,7 @@ export const toggleTheme = () => setTheme(getTheme() === 'dark' ? 'light' : 'dar
 export const onThemeChange = (fn: (t: Theme) => void) =>
   window.addEventListener(EVENT, (e) => fn((e as CustomEvent<Theme>).detail));
 
-/** Read a CSS custom property — scenes use this so 3D colours follow the theme tokens. */
+/** Read a CSS custom property. Scenes use this so 3D colours follow the theme tokens. */
 export const cssVar = (name: string) =>
   getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 

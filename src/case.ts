@@ -12,7 +12,7 @@ const cs = project.caseStudy;
 const next = caseStudies[(index + 1) % caseStudies.length];
 const two = (n: number) => String(n).padStart(2, '0');
 
-document.title = `${project.name} — case study · Shubhranka Varma`;
+document.title = `${project.name} case study · Shubhranka Varma`;
 document.querySelector('meta[name="description"]')?.setAttribute('content', project.blurb);
 
 function frame(shot: Shot, eager = false) {

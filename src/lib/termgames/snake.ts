@@ -5,7 +5,7 @@ import type { AppStart } from '../terminal';
 type P = { x: number; y: number };
 
 const TICK_MS = 115;
-/** Every Nth food is amber — eating it finds a hidden stone. */
+/** Every Nth food is amber. Eating it finds a hidden stone. */
 const STONE_EVERY = 5;
 const C = { bg: '#1a1714', grid: '#201c18', food: '#e6e0d7', stone: '#f5a524', head: '#ffe3a8' };
 
@@ -88,7 +88,7 @@ export const start: AppStart = (host, exit) => {
     if (head.x === food.x && head.y === food.y) {
       if (isStone()) {
         findStone('snake');
-        foot.textContent = '◆ that one was amber — a hidden stone.';
+        foot.textContent = '◆ that one was amber: a hidden stone.';
       }
       eaten++;
       score += 10;

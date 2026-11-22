@@ -63,7 +63,7 @@ export function mount(card: HTMLElement) {
 
   function showBest() {
     const b = bests('typing')[0];
-    stat('best').textContent = b ? b.label : '— wpm';
+    stat('best').textContent = b ? b.label : 'none yet';
   }
 
   function reset(next = false) {

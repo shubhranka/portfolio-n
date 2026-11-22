@@ -29,7 +29,7 @@ export const start: AppStart = (host, exit) => {
     const r = result(board);
     foot.innerHTML =
       r === 'draw'
-        ? '<span class="term-ok">draw — a worthy opponent.</span> n for another'
+        ? '<span class="term-ok">draw. a worthy opponent.</span> n for another'
         : r === 'O'
           ? '<span class="term-acc">the AI wins this one.</span> n for another'
           : r === 'X'

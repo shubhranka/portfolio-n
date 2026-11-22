@@ -117,7 +117,7 @@ export async function initTagSphere(host: HTMLElement, names: string[], opts: Sp
   stage.invalidate();
 
   // Click or tap (without dragging) picks the nearest front-facing tag, within a
-  // forgiving radius — the labels are small and always moving.
+  // forgiving radius, since the labels are small and always moving.
   const PICK_PX = 28;
   let travel = 0;
   const pickAt = (x: number, y: number) => {

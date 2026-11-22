@@ -94,7 +94,7 @@ export const start: AppStart = (host, exit) => {
       .join('');
     boardEl.setAttribute('aria-label', `2048 board: ${grid.map((v) => v || '·').join(' ')}`);
     el('score').textContent = `score ${score.toLocaleString('en-US')}`;
-    el('best').textContent = `best ${best ? best.toLocaleString('en-US') : '—'}`;
+    el('best').textContent = `best ${best ? best.toLocaleString('en-US') : 'none yet'}`;
     el('msg').textContent = msg;
   }
 

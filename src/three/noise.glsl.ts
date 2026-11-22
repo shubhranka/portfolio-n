@@ -1,4 +1,4 @@
-// 3D simplex noise — Ashima Arts / Stefan Gustavson (MIT).
+// 3D simplex noise by Ashima Arts / Stefan Gustavson (MIT).
 export const simplex3 = /* glsl */ `
 vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
 vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}

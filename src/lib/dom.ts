@@ -8,12 +8,12 @@ export const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ESC[c]);
  */
 export function fmt(s: string): string {
   return esc(s)
-    .replace(/\[\[(.+?)\]\]/g, '<span class="ph" title="Placeholder — replace in src/data.ts">$1</span>')
+    .replace(/\[\[(.+?)\]\]/g, '<span class="ph" title="Placeholder: replace in src/data.ts">$1</span>')
     .replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>');
 }
 
-/** Same as fmt, but strips placeholder markup — for plain-text contexts like the terminal. */
+/** Same as fmt, but strips placeholder markup, for plain-text contexts like the terminal. */
 export const plain = (s: string) => s.replace(/\[\[(.+?)\]\]/g, '$1').replace(/[`*]/g, '');
 
 export const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) =>

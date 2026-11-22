@@ -21,7 +21,7 @@ export const headerTools = `
 /** Header for pages outside the home page (Play, Secret). */
 export const pageHeader = (current: 'play' | '') => `
   <header class="wrap site-header">
-    <a class="brand" href="/" aria-label="${profile.name} — home">
+    <a class="brand" href="/" aria-label="${profile.name}, home">
       <span class="brand-mark">${profile.name[0]}</span>
       <span class="brand-name">${profile.name}</span>
     </a>

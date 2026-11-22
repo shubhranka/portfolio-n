@@ -4,7 +4,7 @@ import { award, findStone } from '../lib/progress';
 import { record } from '../lib/scores';
 
 const t = playPage.sql;
-/** "Would Zusk run this?" — allow or block each statement under read-only mode. */
+/** "Would Zusk run this?": allow or block each statement under read-only mode. */
 export function mount(card: HTMLElement) {
   const meta = card.querySelector<HTMLElement>('.game-meta')!;
   const body = card.querySelector<HTMLElement>('.game-body')!;

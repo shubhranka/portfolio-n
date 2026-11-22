@@ -15,7 +15,7 @@ export const demoTiles: Record<string, string> = {
 
 export const sentinelSim = {
   eyebrow: 'Try it',
-  title: 'Sentinel — live mini-sim',
+  title: 'Sentinel · live mini-sim',
   checking: 15_000,
   fund: 40_000,
   rent: 12_000,
@@ -43,7 +43,7 @@ export interface CallLine {
 
 export const askMeReplay = {
   eyebrow: 'Try it',
-  title: 'Ask-me — call replay',
+  title: 'Ask-me · call replay',
   intro: 'A recorded call plays back line by line while the mood gauge reacts.',
   totalFields: 5,
   start: { mood: 70, fields: 0, watch: 0 },
@@ -91,7 +91,7 @@ export const glossary: { term: string; also?: string[]; text: string }[] = [
   { term: 'egress', text: 'In LiveKit, exporting a room’s audio or video out of the live session, for example to record a call.' },
   { term: 'Liveblocks', text: 'A hosted service for real-time collaboration: presence, live cursors and shared state that syncs between everyone in a room.' },
   { term: 'Convex', text: 'A hosted backend with a reactive database: queries re-run and push new results to clients whenever the data they read changes.' },
-  { term: 'presence', text: 'Live information about who else is here right now — their cursor, selection or status — that disappears when they leave.' },
+  { term: 'presence', text: 'Live information about who else is here right now (their cursor, selection or status) that disappears when they leave.' },
   { term: 'perfect-freehand', text: 'A small library that turns raw pointer points into a smooth outline whose width follows pressure and speed, like ink.' },
   { term: 'Clerk', text: 'A hosted sign-in and user-management service.' },
   { term: 'PDF.js', also: ['pdf.js'], text: 'Mozilla’s PDF renderer written in JavaScript; it draws each page to a canvas and exposes the text layer for selection.' },
@@ -115,13 +115,13 @@ export const playPage = {
   },
   ttt: {
     title: 'Beat my AI',
-    intro: 'You’re X. It plays minimax, so the best you can do is a draw — and a draw earns the “Worthy opponent” badge.',
+    intro: 'You’re X. It plays minimax, so the best you can do is a draw, and a draw earns the “Worthy opponent” badge.',
     status: {
       turn: 'Your move.',
       thinking: 'Thinking…',
       x: 'You won? That should be impossible.',
       o: 'The AI wins this one.',
-      draw: 'Draw — a worthy opponent.',
+      draw: 'Draw. A worthy opponent.',
     },
   },
   typing: {
@@ -149,7 +149,7 @@ export interface SqlQuestion {
   why: string;
 }
 
-/** "Would Zusk run this?" — add a question by adding an entry. */
+/** "Would Zusk run this?": add a question by adding an entry. */
 export const sqlQuestions: SqlQuestion[] = [
   { sql: 'SELECT * FROM orders\nORDER BY placed_at DESC\nLIMIT 100;', ok: true, why: 'Plain reads are exactly what read-only mode is for.' },
   { sql: 'DELETE FROM sessions\nWHERE expires_at < now();', ok: false, why: 'Postgres itself rejects the write with SQLSTATE 25006, because the run is inside BEGIN READ ONLY.' },
@@ -161,7 +161,7 @@ export const sqlQuestions: SqlQuestion[] = [
   { sql: 'EXPLAIN SELECT * FROM invoices\nWHERE total > 500;', ok: true, why: 'EXPLAIN without ANALYZE only plans the query, so nothing changes.' },
 ];
 
-/** Typing race snippets — real lines from the repos. Keep them short (one to three lines). */
+/** Typing race snippets: real lines from the repos. Keep them short (one to three lines). */
 export const typingSnippets: { repo: string; code: string }[] = [
   { repo: 'zusk', code: 'if read_only && editor.tx != TxState::Idle {\n    editor.client.batch_execute("ROLLBACK").await?;\n}' },
   { repo: 'sentinel', code: 'const deficit = totalBills - userState.balances.checking;' },
@@ -171,7 +171,7 @@ export const typingSnippets: { repo: string; code: string }[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Badges — `how` is shown on the toast and the shelf.
+// Badges. `how` is shown on the toast and the shelf.
 // ---------------------------------------------------------------------------
 
 export const badges = [
@@ -214,7 +214,7 @@ export const secretsCopy = {
   stonesTitle: 'Stones',
   badgesTitle: 'Badges',
   hidden: 'Still hidden',
-  unlocked: 'All five found — the secret page is open.',
+  unlocked: 'All five found. The secret page is open.',
   openSecret: 'Open the secret page →',
   reset: 'Reset progress',
   resetConfirm: 'This forgets stones, badges and scores in this browser. Reset?',
@@ -224,7 +224,7 @@ export const secretsCopy = {
   crtHint: 'CRT mode · press Esc to return to 2026',
 };
 
-/** /secret — shown once all five stones are found. */
+/** /secret: shown once all five stones are found. */
 export const secretNote = {
   eyebrow: '5 / 5 · secret page unlocked',
   title: 'You’re thorough. *I like that.*',
@@ -232,12 +232,12 @@ export const secretNote = {
     'Most people scroll past. You found all five stones, which is the same attention to detail I try to put into the things I build. If you’re hiring, or just want to talk about calm software, write to me and mention the stones.',
     '[[TODO: rewrite this note in your own voice.]]',
   ],
-  locked: 'Not yet. You’ve found {n} of 5 stones — keep looking.',
+  locked: 'Not yet. You’ve found {n} of 5 stones. Keep looking.',
   lockedHint: 'Hint: one hides in the footer of every page.',
 };
 
 // ---------------------------------------------------------------------------
-// Live (Phase 5) — only shown when VITE_LIVE=true and Supabase keys are set.
+// Live (Phase 5): only shown when VITE_LIVE=true and Supabase keys are set.
 // ---------------------------------------------------------------------------
 
 export const liveCopy = {
@@ -254,7 +254,7 @@ export const liveCopy = {
     submit: 'Pin it',
     sent: 'Thanks! Your note will appear once I’ve read it.',
     empty: 'No notes yet. Be the first.',
-    error: 'Couldn’t pin that right now — try again in a minute.',
+    error: 'Couldn’t pin that right now. Try again in a minute.',
   },
   board: {
     note: 'Global leaderboard · nicknames only, nothing else is stored.',

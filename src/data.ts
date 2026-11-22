@@ -78,16 +78,16 @@ const GH = 'https://github.com/shubhranka';
 
 export const profile = {
   name: 'Shubhranka Varma',
-  initials: 'SV', // [[shown in place of a photo — drop a photo at public/me.jpg and set `photo`]]
+  initials: 'SV', // [[shown in place of a photo. Drop a photo at public/me.jpg and set `photo`]]
   photo: '' as string, // e.g. '/me.jpg'
   role: 'Software Engineer',
   meta: '5 yrs · India',
   openToWork: true,
-  headline: 'I build *calm* software — dev tools, AI agents & real-time apps.',
+  headline: 'I build *calm* software dev tools, AI agents & real-time apps.',
   intro:
     'Five years of shipping across Rust, TypeScript, Python and Flutter. I like quiet interfaces, fast feedback loops and software that asks before it acts.',
   about:
-    'Software engineer from India with five years of shipping products end to end — desktop dev tools in Rust, AI agents that know when to step aside, and real-time apps over WebRTC and WebSockets. I care about software that feels calm: fast, honest about what it is doing, and safe by default. [[Add a sentence about what you want to work on next.]]',
+    'Software engineer from India with five years of shipping products end to end: desktop dev tools in Rust, AI agents that know when to step aside, and real-time apps over WebRTC and WebSockets. I care about software that feels calm: fast, honest about what it is doing, and safe by default. [[Add a sentence about what you want to work on next.]]',
   email: 'shubhrankavarma@gmail.com',
   github: GH,
   linkedin: { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shubhranka-varma/' } as Link,
@@ -117,7 +117,7 @@ export const lab: { glyph: string; name: string; desc: string; href: string }[] 
 ];
 
 // ---------------------------------------------------------------------------
-// Projects — the first five have case studies, in this order.
+// Projects. The first five have case studies, in this order.
 // ---------------------------------------------------------------------------
 
 export const projects: Project[] = [
@@ -134,7 +134,7 @@ export const projects: Project[] = [
       eyebrow: 'Desktop app · Rust + Tauri',
       tagline: 'A calm, fast desktop client for PostgreSQL. *Read-only until you say otherwise.*',
       facts: [
-        { label: 'Role', value: 'Solo — design & build' },
+        { label: 'Role', value: 'Solo · design & build' },
         { label: 'Stack', value: 'Rust · Tauri 2 · React 19' },
         { label: 'Platforms', value: 'macOS · Windows · Linux' },
         {
@@ -152,7 +152,7 @@ export const projects: Project[] = [
       },
       problem: {
         title: "One wrong run shouldn't cost a table.",
-        body: 'Database GUIs make it just as easy to run an `UPDATE` as a `SELECT`. I wanted a client for exploring production-like data that is safe by default, shows values exactly as `psql` would, and stays out of the way — browse a schema, preview a table in one click, and write SQL in an editor that knows your tables.',
+        body: 'Database GUIs make it just as easy to run an `UPDATE` as a `SELECT`. I wanted a client for exploring production-like data that is safe by default, shows values exactly as `psql` would, and stays out of the way: browse a schema, preview a table in one click, and write SQL in an editor that knows your tables.',
       },
       decisions: [
         {
@@ -165,7 +165,7 @@ export const projects: Project[] = [
         },
         {
           title: 'AI that asks before it acts',
-          body: 'Fix with AI and Chat rewrite your SQL with a diff and undo — nothing runs until you run it. The agent is always read-only, on its own connection, with a 30-second timeout.',
+          body: 'Fix with AI and Chat rewrite your SQL with a diff and undo. Nothing runs until you run it. The agent is always read-only, on its own connection, with a 30-second timeout.',
         },
       ],
       architecture: {
@@ -190,15 +190,15 @@ export const projects: Project[] = [
         shot: { src: '/work/zusk/read-only.png', alt: 'A DELETE statement refused by the server because the session is read-only' },
       },
       gallery: [
-        { src: '/work/zusk/query.png', alt: 'A query joining orders and customers, with revenue by country in the grid', caption: 'Write and run SQL — autocompletion, typed columns and timings.' },
-        { src: '/work/zusk/structure.png', alt: 'The Structure tab for orders: columns, types, nullability, keys and defaults', caption: 'Read the structure — types, keys, defaults and comments.' },
+        { src: '/work/zusk/query.png', alt: 'A query joining orders and customers, with revenue by country in the grid', caption: 'Write and run SQL with autocompletion, typed columns and timings.' },
+        { src: '/work/zusk/structure.png', alt: 'The Structure tab for orders: columns, types, nullability, keys and defaults', caption: 'Read the structure: types, keys, defaults and comments.' },
         { src: '/work/zusk/jump.png', alt: 'The jump box listing tables and views from several schemas', caption: 'Jump anywhere with ⌘K, across schemas.' },
       ],
       learned: [
-        'Being *faithful to psql* is a feature in itself. Scripts are split and run one statement at a time, and the splitter has to handle quoted identifiers, dollar quoting, nested comments and `BEGIN ATOMIC` bodies — the edge cases are the product.',
+        'Being *faithful to psql* is a feature in itself. Scripts are split and run one statement at a time, and the splitter has to handle quoted identifiers, dollar quoting, nested comments and `BEGIN ATOMIC` bodies. The edge cases are the product.',
         'Two connections per server beat one. The catalog connection keeps the explorer responsive while your editor session keeps its `SET`s, open transactions and temp tables between runs.',
-        'Column types can be filled in after the fact by preparing a statement without running it again — so results stay exact without paying for a second execution.',
-        '[[Draft written from the README — rewrite these in your own words.]]',
+        'Column types can be filled in after the fact by preparing a statement without running it again, so results stay exact without paying for a second execution.',
+        '[[Draft written from the README. Rewrite these in your own words.]]',
       ],
     },
   },
@@ -215,7 +215,7 @@ export const projects: Project[] = [
       eyebrow: 'AI · Reading · Runs locally',
       tagline: 'A calm little PDF reader that remembers where you stopped *and explains anything you highlight.*',
       facts: [
-        { label: 'Role', value: 'Solo — design & build' },
+        { label: 'Role', value: 'Solo · design & build' },
         { label: 'Stack', value: 'Express · PDF.js · node:sqlite' },
         { label: 'AI', value: 'Gemini · Mistral · Groq · OpenRouter · NVIDIA' },
         { label: 'Links', value: '', links: [{ label: 'Source', href: `${GH}/smart-pdf-reader` }] },
@@ -226,7 +226,7 @@ export const projects: Project[] = [
       },
       problem: {
         title: "Reading something hard shouldn't mean leaving the page.",
-        body: 'Looking up a word means a new tab, a search and a lost place. Coming back after a week means rereading the last chapter. I wanted a reader where help comes to the page — the meaning of a word *and* what it means in this book — and where nothing leaves your machine except the text you ask about.',
+        body: 'Looking up a word means a new tab, a search and a lost place. Coming back after a week means rereading the last chapter. I wanted a reader where help comes to the page (the meaning of a word *and* what it means in this book) and where nothing leaves your machine except the text you ask about.',
       },
       decisions: [
         {
@@ -261,8 +261,8 @@ export const projects: Project[] = [
       },
       highlight: {
         eyebrow: 'Catch me up',
-        title: 'A recap of everything so far — with a sketch of how it connects.',
-        body: 'Choose a range — from the start, up to any page, or up to a line you highlight — and get a short summary with key points linked to their pages, plus a hand-drawn diagram. Recaps are saved, so “what I knew at page 40” is one click away.',
+        title: 'A recap of everything so far, with a sketch of how it connects.',
+        body: 'Choose a range (from the start, up to any page, or up to a line you highlight) and get a short summary with key points linked to their pages, plus a hand-drawn diagram. Recaps are saved, so “what I knew at page 40” is one click away.',
         shot: { src: '/work/smart-pdf-reader/recap-diagram.png', alt: "The recap's hand-drawn diagram: electrons from food, electron transport chain, proton gradient, ATP synthase, ATP" },
       },
       gallery: [
@@ -272,9 +272,9 @@ export const projects: Project[] = [
       ],
       learned: [
         'Let the model *decide* the structure, never draw it. Diagrams and mind maps are sketched by rough.js from what the model returns, so they always look the same and never come out mangled.',
-        'Lazy rendering is what makes a 900-page PDF open as fast as a 5-page one — pages are drawn only as you reach them.',
+        'Lazy rendering is what makes a 900-page PDF open as fast as a 5-page one: pages are drawn only as you reach them.',
         'Keeping a highlight in time with a voice that never says where it is turned out to be the hardest small problem in the app.',
-        '[[Draft written from the README — rewrite these in your own words.]]',
+        '[[Draft written from the README. Rewrite these in your own words.]]',
       ],
     },
   },
@@ -298,7 +298,7 @@ export const projects: Project[] = [
       ],
       hero: {
         alt: 'Ask-me web UI: live transcript, caller mood gauge and escalation watchdog',
-        caption: '[[Screenshot placeholder — add public/work/ask-me/ui.png and set `src`]]',
+        caption: '[[Screenshot placeholder: add public/work/ask-me/ui.png and set `src`]]',
       },
       problem: {
         title: 'A sales agent arguing with someone who said no is the default failure mode.',
@@ -307,7 +307,7 @@ export const projects: Project[] = [
       decisions: [
         {
           title: 'Facts come from a registry, never from memory',
-          body: 'The model may not answer product questions itself — it calls `answer_question` with a topic and delivers what comes back, or hands over. The agent can only ever be as wrong as `config.py`.',
+          body: 'The model may not answer product questions itself. It calls `answer_question` with a topic and delivers what comes back, or hands over. The agent can only ever be as wrong as `config.py`.',
         },
         {
           title: '“At least once” is a guarantee',
@@ -315,7 +315,7 @@ export const projects: Project[] = [
         },
         {
           title: 'Count bad turns, don’t average them',
-          body: 'A judge model scores each caller turn from −1 to +1. On a real souring call the mean sat at −0.40, just under the bar; counting gave 3 of 4 negative turns — and handed over.',
+          body: 'A judge model scores each caller turn from −1 to +1. On a real souring call the mean sat at −0.40, just under the bar; counting gave 3 of 4 negative turns, and handed over.',
         },
       ],
       architecture: {
@@ -348,10 +348,10 @@ export const projects: Project[] = [
       },
       gallery: [],
       learned: [
-        'Keyword triggers must be *narrow*. A bare “no” is an answer on an intake call — checked against 20 genuine “no” answers from a real transcript, the refusal patterns fire on none of them.',
-        'Watch the agent, not just the caller. Replaying a real call showed the human agent offering to take card details — so the sensitive trigger now listens to the agent’s own speech too.',
+        'Keyword triggers must be *narrow*. A bare “no” is an answer on an intake call. Checked against 20 genuine “no” answers from a real transcript, the refusal patterns fire on none of them.',
+        'Watch the agent, not just the caller. Replaying a real call showed the human agent offering to take card details, so the sensitive trigger now listens to the agent’s own speech too.',
         'Free-tier quotas shape architecture: one judge call per turn blew through 15 requests a minute, so the judge throttles itself and skips filler like “Yep.”',
-        '[[Draft written from the README — rewrite these in your own words.]]',
+        '[[Draft written from the README. Rewrite these in your own words.]]',
       ],
     },
   },
@@ -359,14 +359,14 @@ export const projects: Project[] = [
     slug: 'sentinel',
     name: 'Sentinel',
     kind: 'Agentic finance',
-    blurb: 'Spots a cash crunch before it happens — and asks before it fixes it.',
+    blurb: 'Spots a cash crunch before it happens, and asks before it fixes it.',
     stack: ['Node.js', 'Socket.io', 'React', 'Function calling'],
     repo: `${GH}/sentinel`,
     oneLiner: 'agent that guards your cashflow · Node',
     visual: 'sentinel',
     caseStudy: {
       eyebrow: 'Agentic finance · Autonomous cashflow guardian',
-      tagline: 'Spots a cash crunch before it happens — *and asks before it fixes it.*',
+      tagline: 'Spots a cash crunch before it happens, *and asks before it fixes it.*',
       facts: [
         { label: 'Context', value: '[[Hackathon / side project · team or solo]]' },
         { label: 'Stack', value: 'Node · Express · Socket.io · React' },
@@ -375,11 +375,11 @@ export const projects: Project[] = [
       ],
       hero: {
         alt: 'Sentinel dashboard: portfolio, purchase triggers and the Sentinel chat',
-        caption: '[[Screenshot placeholder — add public/work/sentinel/dashboard.png and set `src`]]',
+        caption: '[[Screenshot placeholder: add public/work/sentinel/dashboard.png and set `src`]]',
       },
       problem: {
         title: 'Banking apps look backward.',
-        body: '“You spent 30% on dining” is useful a month too late. Sentinel looks forward instead — at your balance against the bills already scheduled — and steps in *before* a payment bounces, not after.',
+        body: '“You spent 30% on dining” is useful a month too late. Sentinel looks forward instead, at your balance against the bills already scheduled, and steps in *before* a payment bounces, not after.',
       },
       decisions: [
         {
@@ -388,7 +388,7 @@ export const projects: Project[] = [
         },
         {
           title: 'Ask before acting',
-          body: 'The agent prepares an intervention — move savings, liquidate investments — but transfers only execute through function calls after you approve them.',
+          body: 'The agent prepares an intervention (move savings, liquidate investments), but transfers only execute through function calls after you approve them.',
         },
         {
           title: 'Live, not polled',
@@ -420,14 +420,14 @@ export const projects: Project[] = [
         steps: [
           'Dashboard shows ₹15,000 in checking, ₹12,000 rent due tomorrow.',
           'Click “Buy Sony Headphones (₹29,990)”.',
-          'The purchase succeeds — checking goes negative.',
+          'The purchase succeeds, and checking goes negative.',
           'Sentinel warns that rent will fail and proposes a fix.',
           'Approve it: investments are liquidated to cover the deficit.',
         ],
       },
       gallery: [],
       learned: [
-        '[[What building an agent that *acts on money* taught you — e.g. where you drew the line between suggestion and action.]]',
+        '[[What building an agent that *acts on money* taught you, e.g. where you drew the line between suggestion and action.]]',
         '[[One thing about function calling or real-time UX you would do differently next time.]]',
       ],
     },
@@ -452,16 +452,16 @@ export const projects: Project[] = [
       ],
       hero: {
         alt: 'A Chalky board with shapes, sticky notes and two live cursors',
-        caption: '[[Screenshot placeholder — add public/work/chalky/board.png and set `src`]]',
+        caption: '[[Screenshot placeholder: add public/work/chalky/board.png and set `src`]]',
       },
       problem: {
         title: 'Thinking together needs a shared surface.',
-        body: '[[Chalky’s README is the Next.js starter, so this case study is drafted from its dependencies — check it before publishing.]] A whiteboard where everyone sees the same canvas, each other’s cursors and each other’s strokes as they happen, with boards that are saved, shared and easy to come back to.',
+        body: '[[Chalky’s README is the Next.js starter, so this case study is drafted from its dependencies. Check it before publishing.]] A whiteboard where everyone sees the same canvas, each other’s cursors and each other’s strokes as they happen, with boards that are saved, shared and easy to come back to.',
       },
       decisions: [
         {
           title: 'Live state and saved state, kept apart',
-          body: 'Liveblocks carries what changes many times a second — cursors, presence, layers on the canvas. Convex holds what should outlive a session: the boards themselves and favourites.',
+          body: 'Liveblocks carries what changes many times a second: cursors, presence, layers on the canvas. Convex holds what should outlive a session: the boards themselves and favourites.',
         },
         {
           title: 'Strokes that feel like ink',
@@ -487,7 +487,7 @@ export const projects: Project[] = [
       },
       gallery: [],
       learned: [
-        '[[What real-time sync taught you — conflicts, latency, presence.]]',
+        '[[What real-time sync taught you: conflicts, latency, presence.]]',
         '[[What you would change about the split between Liveblocks and Convex.]]',
       ],
     },

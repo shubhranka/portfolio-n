@@ -14,7 +14,7 @@ export const env = {
 
 export const onReducedMotionChange = (fn: () => void) => reducedQuery.addEventListener('change', fn);
 
-/** Cap device pixel ratio — the biggest single win for GPU cost on phones. */
+/** Cap device pixel ratio: the biggest single win for GPU cost on phones. */
 export const pixelRatio = () => Math.min(window.devicePixelRatio || 1, env.lite ? 1.5 : 2);
 
 /** Live features (presence, guestbook, global boards) need the flag and both Supabase keys. */

@@ -115,10 +115,10 @@ export function initTerminal() {
       },
     },
     open: {
-      desc: 'open a project — open zusk',
+      desc: 'open a project, e.g. open zusk',
       run: ([name]) => {
         const p = projects.find((x) => x.slug === name?.toLowerCase());
-        if (!p) return `usage: open &lt;name&gt; — try ${acc('projects')}`;
+        if (!p) return `usage: open &lt;name&gt; · try ${acc('projects')}`;
         const href = p.caseStudy ? caseStudyHref(p.slug) : p.repo;
         setTimeout(() => (p.caseStudy ? (location.href = href) : window.open(href, '_blank', 'noopener')), 250);
         return `opening ${acc(p.name)}…`;
@@ -136,7 +136,7 @@ export function initTerminal() {
       desc: 'try sudo hire-me',
       hidden: true,
       run: ([what]) => {
-        if (what !== 'hire-me') return `sudo: ${esc(what ?? '')}: command not found — try ${acc('sudo hire-me')}`;
+        if (what !== 'hire-me') return `sudo: ${esc(what ?? '')}: command not found · try ${acc('sudo hire-me')}`;
         askSecret('[sudo] password for recruiter: ', () =>
           print(
             `<span class="term-ok">✓</span> Permission granted. Opening a calm conversation…\n→ ${mail}`,
@@ -149,7 +149,7 @@ export function initTerminal() {
       hidden: true,
       run: (args) =>
         args.join(' ') === '-rf boredom'
-          ? `removed 'boredom' — try ${acc('play snake')}, ${acc('play 2048')} or ${acc('play ttt')}`
+          ? `removed 'boredom' · try ${acc('play snake')}, ${acc('play 2048')} or ${acc('play ttt')}`
           : `rm: refusing to remove anything here. Try ${acc('rm -rf boredom')}.`,
     },
     'reset-progress': {
@@ -174,7 +174,7 @@ export function initTerminal() {
     const [name, ...args] = trimmed.split(/\s+/);
     const cmd = commands[name.toLowerCase()];
     if (!cmd) {
-      print(`command not found: ${esc(name)} — type ${acc('help')}`);
+      print(`command not found: ${esc(name)} · type ${acc('help')}`);
       return;
     }
     const out = cmd.run(args);
@@ -218,7 +218,7 @@ export function initTerminal() {
   function askSecret(prompt: string, done: () => void) {
     secret = { n: 0, done };
     promptEl.textContent = prompt;
-    input.setAttribute('aria-label', 'Password (any text works — nothing is stored)');
+    input.setAttribute('aria-label', 'Password (any text works, nothing is stored)');
   }
 
   function endSecret() {
