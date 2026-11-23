@@ -18,15 +18,15 @@ export const headerTools = `
     <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">${icons.moon}${icons.sun}</button>
   </div>`;
 
-/** Header for pages outside the home page (Play, Secret). */
-export const pageHeader = (current: 'play' | '') => `
+/** Header for pages outside the home page (Play, Sketches, Secret). */
+export const pageHeader = (current: 'play' | 'sketches' | '') => `
   <header class="wrap site-header">
     <a class="brand" href="/" aria-label="${profile.name}, home">
       <span class="brand-mark">${profile.name[0]}</span>
       <span class="brand-name">${profile.name}</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="/#work">Work</a><a href="/play/"${current === 'play' ? ' aria-current="page"' : ''}>Play</a><a href="/#lab">Lab</a><a href="/#contact">Contact</a>
+      <a href="/#work">Work</a><a href="/play/"${current === 'play' ? ' aria-current="page"' : ''}>Play</a><a href="/#lab">Lab</a><a href="/#contact">Contact</a><a href="/sketches/"${current === 'sketches' ? ' aria-current="page"' : ''}>Sketches</a>
     </nav>
     ${headerTools}
   </header>`;

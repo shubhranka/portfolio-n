@@ -17,6 +17,7 @@ export default defineConfig({
         main: resolve(import.meta.dirname, 'index.html'),
         play: resolve(import.meta.dirname, 'play', 'index.html'),
         secret: resolve(import.meta.dirname, 'secret', 'index.html'),
+        sketches: resolve(import.meta.dirname, 'sketches', 'index.html'),
         ...caseStudies,
       },
     },

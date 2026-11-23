@@ -85,7 +85,7 @@ app.innerHTML = `
       <span class="brand-name">${esc(profile.name)}</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#work">Work</a><a href="/play/">Play</a><a href="#lab">Lab</a><a href="#contact">Contact</a>
+      <a href="#work">Work</a><a href="/play/">Play</a><a href="#lab">Lab</a><a href="#contact">Contact</a><a href="/sketches/">Sketches</a>
     </nav>
     ${headerTools}
   </header>

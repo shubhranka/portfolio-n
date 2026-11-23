@@ -54,6 +54,7 @@ Copy and data for the playful parts of the site (demo scripts, glossary, and lat
   - The SQL game and tic-tac-toe ship with the page so nothing shifts when they appear. The typing race, blob and leaderboard load as you scroll to them. The blob reuses `src/three/hero.ts` with `{ playground: true }`, which adds the poke squish and red tint.
   - Personal bests (top five runs per game) and the tic-tac-toe tally are kept in `localStorage` under keys starting with `sv:`.
 
+- **/sketches.** The three concept sketches from the design file (visitor journeys, home wireframe, games & secrets), linked as "Sketches" in the nav. The images are 2x PNGs in `public/sketches/`, and their titles and captions are at the top of `src/sketches.ts`. Clicking a sketch opens it full size in a new tab.
 - **Hidden stones.** There are five, listed in `stones`:
   - the dot beside © in the footer
   - every 5th Snake food
