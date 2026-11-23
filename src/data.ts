@@ -91,7 +91,13 @@ export const profile = {
   email: 'shubhrankavarma@gmail.com',
   github: GH,
   linkedin: { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shubhranka-varma/' } as Link,
-  resume: { label: 'Résumé', href: '/resume.pdf', placeholder: true } as Link, // [[put your résumé at public/resume.pdf]]
+  /** Other profiles, shown in the contact links and the terminal's `contact`. */
+  elsewhere: [
+    { label: 'LeetCode', href: 'https://leetcode.com/u/shubhrankavarma/' },
+    { label: 'Codeforces', href: 'https://codeforces.com/profile/shubhrankavarma' },
+    { label: 'YouTube', href: 'https://www.youtube.com/@manushya-t8f' },
+  ] as Link[],
+  resume: { label: 'Résumé', href: '/resume.pdf' } as Link,
   repoCount: '60+',
 };
 

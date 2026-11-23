@@ -172,6 +172,7 @@ app.innerHTML = `
       <div class="contact-links">
         <a ${linkAttrs(profile.github)}>GitHub</a>
         <a ${linkAttrs(profile.linkedin.href)}${ph(profile.linkedin.placeholder)}>LinkedIn</a>
+        ${profile.elsewhere.map((l) => `<a ${linkAttrs(l.href)}>${esc(l.label)}</a>`).join('')}
         <a ${linkAttrs(profile.resume.href)}${ph(profile.resume.placeholder)}>Résumé</a>
       </div>
     </section>

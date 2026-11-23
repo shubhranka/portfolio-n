@@ -16,12 +16,12 @@ npx lighthouse http://localhost:4173/ --form-factor=mobile --view   # with previ
 
 ## Editing content
 
-**All content lives in [`src/data.ts`](src/data.ts):** profile, projects, case studies, toolbox, lab and contact. The pages and the terminal read from it, so you never need to edit HTML.
+**All content lives in [`src/data.ts`](src/data.ts):** profile (including the résumé at `public/resume.pdf` and the `elsewhere` profile links), projects, case studies, toolbox, lab and contact. The pages and the terminal read from it, so you never need to edit HTML.
 
 Placeholders are marked so they're easy to find, and they stay visibly marked on the site until you replace them:
 
 - Text wrapped in `[[…]]` shows as a dashed amber label. Search `src/data.ts` for `[[`.
-- Items with `placeholder: true` get a dashed outline (e.g. résumé).
+- Items with `placeholder: true` get a dashed outline.
 - In dev, the console prints how many placeholders are left on the page.
 
 Still to fill in:
@@ -29,7 +29,6 @@ Still to fill in:
 | What | Where |
 | --- | --- |
 | Photo | Put it in `public/me.jpg` and set `profile.photo = '/me.jpg'` |
-| Résumé | Put it in `public/resume.pdf`, then remove `placeholder: true` from `profile.resume` |
 | Jourme one-liner | the `jourme` project |
 | Chalky screenshot | Add an image under `public/work/chalky/` and set `hero.src` (plus `gallery` if you like) |
 | Ask-me / Sentinel screenshots (optional) | These have no hero image. To add one, put it in `public/work/<slug>/` and add `hero: { src, alt }` to that `caseStudy` |
