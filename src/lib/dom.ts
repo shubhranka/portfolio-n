@@ -24,8 +24,9 @@ export const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNod
 
 export const isExternal = (href: string) => /^https?:/.test(href);
 
+/** External links and PDFs (the résumé) open in a new tab so the site stays open. */
 export const linkAttrs = (href: string) =>
-  `href="${esc(href)}"${isExternal(href) ? ' target="_blank" rel="noopener"' : ''}`;
+  `href="${esc(href)}"${isExternal(href) || href.endsWith('.pdf') ? ' target="_blank" rel="noopener"' : ''}`;
 
 export const icons = {
   arrow:

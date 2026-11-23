@@ -97,9 +97,13 @@ export function initTerminal() {
       desc: 'how to reach me',
       run: () =>
         [
-          `${pad('email', 10)}${mail}`,
-          `${pad('github', 10)}<a href="${profile.github}" target="_blank" rel="noopener">${profile.github.replace('https://', '')}</a>`,
-          `${pad('linkedin', 10)}<a href="${esc(profile.linkedin.href)}">${profile.linkedin.placeholder ? '[add your LinkedIn]' : esc(profile.linkedin.href)}</a>`,
+          `${pad('email', 12)}${mail}`,
+          `${pad('github', 12)}<a href="${profile.github}" target="_blank" rel="noopener">${profile.github.replace('https://', '')}</a>`,
+          `${pad('linkedin', 12)}<a href="${esc(profile.linkedin.href)}">${profile.linkedin.placeholder ? '[add your LinkedIn]' : esc(profile.linkedin.href)}</a>`,
+          ...profile.elsewhere.map(
+            (l) => `${pad(l.label.toLowerCase(), 12)}<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.href.replace(/^https:\/\/(www\.)?/, ''))}</a>`,
+          ),
+          `${pad('résumé', 12)}<a href="${esc(profile.resume.href)}" target="_blank" rel="noopener">${esc(profile.resume.href)}</a>`,
         ].join('\n'),
     },
     hire: {
